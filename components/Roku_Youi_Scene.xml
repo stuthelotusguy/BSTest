@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+
+<component name="Roku_Youi_Scene" extends="Scene" >
+
+<script type="text/brightscript">
+<![CDATA[
+
+sub init()
+	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
+end sub
+
+]]>
+</script>
+
+</component>

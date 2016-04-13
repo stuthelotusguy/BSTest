@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<component name="LoadFromServer" extends="Task">
+
+<interface>
+  <field id="uri" type="string" />
+  <field id="index" type="int" value="0"/>
+  <field id="content" type="node" />
+</interface>
+
+<script type="text/brightscript" >
+<![CDATA[
+
+sub init()
+	print "init..."
+	m.top.functionName = "executeTask"
+	print "init done."
+end sub
+
+function executeTask() as void
+
+	while true
+		sleep(2000)
+		m.top.index = m.top.index + 1
+
+  'content = createObject("RoSGNode","Poster")
+  'contentxml = createObject("roXMLElement")
+ 
+  'readInternet = createObject("roUrlTransfer")
+  'readInternet.setUrl(m.top.uri)
+  'contentxml.parse(readInternet.GetToString())
+ 
+  'if contentxml.getName()="listcontent"
+  '  print("getContent: listcontent found")
+  '  for each item in contentxml.GetNamedElements("item")
+  '    attributes = item.getAttributes()
+  '      listitem = content.createChild("Poster")
+  '      listitem.translation=[Val(attributes.posx), Val(attributes.posy)]
+  '      listitem.width = Val(attributes.width)
+  '      listitem.height = Val(attributes.height)
+  '      listitem.uri = attributes.uri
+  '      print("getContent:")
+  '      print(item.text)
+  '  end for
+  'end if
+  'm.top.content = content
+  'print("getContent complete")
+	end while
+end function
+
+]]>
+</script>
+
+</component>
