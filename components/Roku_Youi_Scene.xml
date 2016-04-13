@@ -13,4 +13,18 @@ end sub
 ]]>
 </script>
 
+<children>
+
+  <Label
+    id = "Label"
+    height = "44"
+    width = "0"
+    font = "font:MediumBoldSystemFont"
+    text = "You.i Client-Server Test!"
+    horizAlign = "left"
+    vertAlign = "center" />
+
+</children>
+
+
 </component>
