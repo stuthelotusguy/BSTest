@@ -7,8 +7,14 @@
 <![CDATA[
 
 sub init()
-	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
+	'm.top.backgroundURI = "pkg:/images/purplebg.jpg"
 end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+  handled = false
+  print "Roku_Youi_Scene Processing event..."
+  return handled
+end function
 
 ]]>
 </script>
