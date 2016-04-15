@@ -80,7 +80,6 @@ sub CreateSG(xml as Object, node as Object)
 			attributes = elem.getAttributes()
 			item = node.createChild("Poster")
 			item.id = attributes.id
-			item.id = attributes.id
 			item.rotation = attributes.rz
 			item.opacity = attributes.t
 			item.scaleRotateCenter = [Val(attributes.ax), Val(attributes.ay)]
@@ -146,6 +145,10 @@ sub CreateSG(xml as Object, node as Object)
 			item.horizAlign = "left"
 			item.vertAlign = "center"
 			PrintoutOfItem(item)
+		else if(elemname="a")
+			attributes = elem.getAttributes()
+			item = node.createChild("Animation")
+			print "Animation found. Not implemented yet"
 		end if
 
 	end for
