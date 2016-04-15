@@ -93,6 +93,7 @@ sub CreateSG(xml as Object, node as Object)
 				name = Left(attributes.url, 4)
 				lname = lcase(name)
 				if lname <> "http"
+					'BrS issue: Images do not seem to work from local files which means they must be hosted.'
 					'newuri = "pkg:/assets/drawable/default/" + attributes.url
 					newuri = "http://107.170.94.189/media/default/" + attributes.url
 					item.uri = newuri
@@ -121,8 +122,12 @@ sub CreateSG(xml as Object, node as Object)
 			item.color = attributes.c
 			item.text = attributes.ft
 			font  = CreateObject("roSGNode", "Font")
-			'font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
-			font.uri = "http://107.170.94.189/media/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+
+			'BrS issue: Fonts do not seem to work from a url which means they must be part of the pkg.'
+			font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+			'font.uri = "http://107.170.94.189/media/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+			'print font.uri
+
 			fontsize = Val(attributes.fz)
 			font.size = fontsize
 			item.font = font
