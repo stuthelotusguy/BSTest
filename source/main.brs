@@ -18,7 +18,7 @@ sub showChannelSGScreen()
     addr.SetHostName("10.0.0.113")
     udp.setSendToAddress(addr) ' peer IP and port
     udp.notifyReadable(true)
-    timeout = 1 * 10 * 1000 ' ten seconds in milliseconds
+    timeout = 0 '1 * 10 * 1000 ' ten seconds in milliseconds
     uniqueDev = createobject("roDeviceInfo").GetDeviceUniqueId()
     message = "Datagram from " + uniqueDev
     udp.sendStr(message)
@@ -93,11 +93,13 @@ sub CreateSG(xml as Object, node as Object)
 				name = Left(attributes.url, 4)
 				lname = lcase(name)
 				if lname <> "http"
-					newuri = "pkg:/assets/drawable/default/" + attributes.url
+					'newuri = "pkg:/assets/drawable/default/" + attributes.url
+					newuri = "http://107.170.94.189/media/default/" + attributes.url
 					item.uri = newuri
 				end if
 			else
-				item.uri = "pkg:/assets/drawable/default/Card_04.jpg"
+				'item.uri = "pkg:/assets/drawable/default/Placeholder16x9.png"
+				item.uri = "http://107.170.94.189/media/default/Placeholder16x9.png"
 			End if
 			PrintoutOfItem(item)
 		else if(elemname="s")
@@ -119,7 +121,8 @@ sub CreateSG(xml as Object, node as Object)
 			item.color = attributes.c
 			item.text = attributes.ft
 			font  = CreateObject("roSGNode", "Font")
-			font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+			'font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+			font.uri = "http://107.170.94.189/media/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
 			fontsize = Val(attributes.fz)
 			font.size = fontsize
 			item.font = font
