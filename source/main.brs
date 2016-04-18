@@ -99,12 +99,12 @@ sub CreateSG(xml as Object, node as Object)
 				if lname <> "http"
 					'BrS issue: Images do not seem to work from local files which means they must be hosted.'
 					'newuri = "pkg:/assets/drawable/default/" + attributes.url
-					newuri = "http://107.170.94.189/media/default/" + attributes.url
+					newuri = "http://107.170.5.4/images/" + attributes.url
 					item.uri = newuri
 				end if
 			else
 				'item.uri = "pkg:/assets/drawable/default/Placeholder16x9.png"
-				item.uri = "http://107.170.94.189/media/default/Placeholder16x9.png"
+				item.uri = "http://107.170.5.4/images/Placeholder16x9.png"
 			End if
 			PrintoutOfItem(item)
 		else if(elemname="s")
@@ -129,7 +129,7 @@ sub CreateSG(xml as Object, node as Object)
 
 			'BrS issue: Fonts do not seem to work from a url which means they must be part of the pkg.'
 			font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
-			'font.uri = "http://107.170.94.189/media/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+			'font.uri = "http://107.170.5.4/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
 			'print font.uri
 
 			fontsize = Val(attributes.fz)
