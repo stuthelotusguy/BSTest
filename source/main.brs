@@ -71,12 +71,17 @@ end sub
 sub CreateSG(xml as Object, node as Object)
 	for each elem in xml
 		elemname = elem.GetName()
-		if(elemname="Group")
-			group = node.createChild("Group")
-			groupbody = elem.GetBody()
-			CreateSG(groupbody, group)
-		endif
-		if(elemname="i")
+		if(elemname="g")
+			attributes = elem.getAttributes()
+			item = node.createChild("Group")
+			item.id = attributes.id
+			item.rotation = attributes.rz
+			item.opacity = attributes.t
+			item.scaleRotateCenter = [Val(attributes.ax), Val(attributes.ay)]
+			item.translation = [Val(attributes.x), Val(attributes.y)]
+			item.scale = [Val(attributes.sx), Val(attributes.sy)]
+			PrintoutOfItem(item)
+		else if(elemname="i")
 			attributes = elem.getAttributes()
 			item = node.createChild("Poster")
 			item.id = attributes.id
@@ -150,6 +155,11 @@ sub CreateSG(xml as Object, node as Object)
 			item = node.createChild("Animation")
 			print "Animation found. Not implemented yet"
 		end if
+
+		itembody = elem.GetBody()
+		if (itembody <> invalid)
+			CreateSG(itembody, item)
+		endif
 
 	end for
 end sub
