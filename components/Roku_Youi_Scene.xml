@@ -8,12 +8,21 @@
 
 sub init()
 	'm.top.backgroundURI = "pkg:/images/purplebg.jpg"
+    m.top.id = "Roku_Youi_Scene"
+    m.label = m.top.findNode("Label")
+    m.keyinput = "none"
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
-  handled = false
-  print "Roku_Youi_Scene Processing event..."
-  return handled
+    handled = true
+    print "Roku_Youi_Scene Processing event..." + key
+    if(press)
+        m.global.key = key
+    else
+        m.global.key = "none"
+    end if
+
+    return handled
 end function
 
 ]]>
@@ -23,6 +32,7 @@ end function
 
   <Label
     id = "Label"
+    visible = "true"
     height = "44"
     width = "0"
     font = "font:MediumBoldSystemFont"
