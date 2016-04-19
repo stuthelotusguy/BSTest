@@ -45,13 +45,8 @@ sub showChannelSGScreen()
 						
 							CreateSG(body, content)
 
-							if(m.scene.getChildCount() > 0)
-								print "replacing scene"
-								m.scene.replaceChild(content, 0)
-							else
-								print "creating scene"
-								m.scene.InsertChild(content, 0)
-							End if
+							print "replacing scene"
+							m.scene.replaceChild(content, m.scene.getChildCount() - 1)
 						end if
 					End If
                 End If
@@ -138,17 +133,27 @@ sub CreateSG(xml as Object, node as Object)
 			item.id = attributes.id
 			if(attributes.fw <> invalid)
 				wrap = Val(attributes.fw)
-				item.wrap = wrap = 1
+				item.wrap = wrap
 			end if
+            if(attributes.fe <> invalid)
+                ellipsize = Val(attributes.fe)
+                item.ellipsizeOnBoundary = ellipsize
+            end if
 			item.rotation = attributes.rz
 			item.opacity = attributes.t
 			item.scaleRotateCenter = [Val(attributes.ax), Val(attributes.ay)]
 			item.translation = [Val(attributes.x), Val(attributes.y)]
 			item.scale = [Val(attributes.sx), Val(attributes.sy)]
-			item.width = Val(attributes.w) * 1.16
-			item.height = Val(attributes.h) * 1.16
-			item.horizAlign = "left"
-			item.vertAlign = "center"
+            if(attributes.w <> invalid)
+                item.width = Val(attributes.w)
+            end if
+            if(attributes.h <> invalid)
+                item.height = Val(attributes.h)
+            end if
+            if(attributes.tj <> invalid)
+                item.horizAlign = attributes.tj
+            end if
+			item.vertAlign = "top"
 			PrintoutOfItem(item)
 		else if(elemname="a")
 			attributes = elem.getAttributes()
