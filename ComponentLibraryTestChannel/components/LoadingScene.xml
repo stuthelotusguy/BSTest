@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<component name="LoadingScene" extends="Scene">
+
+<script type="text/brightscript" >
+<![CDATA[
+  function init() as void
+      m.grp = m.top.FindNode("grp")
+      m.lbl = m.top.FindNode("lbl")
+      m.lib = m.top.FindNode("BSTestLib")
+      m.lib.observeField("loadStatus", "onLoadStatusChanged")
+      print "loading"
+  end function
+
+  function onLoadStatusChanged() as void
+      print "complete"
+      if (m.lib.loadStatus = "ready")
+          'Load Main Screen
+	      m.mainScreen = CreateObject("roSGNode", "MainScreen")
+          m.grp.removeChild(m.lbl)
+          m.lbl = invalid
+	      m.grp.appendChild(m.mainScreen)
+      endif
+  end function
+]]>
+</script>
+
+<children>
+<ComponentLibrary id="BSTestLib" uri="http://107.170.5.4/images/BSTestLib2.pkg" />
+
+<Group id="grp">
+    <Label id="lbl" text="Please Wait..." translation="[0, 0]" width="1280" height="720" />
+</Group>
+</children>
+
+</component>
+
+
