@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="MainScreen" extends="Group">
+
+    <script type="text/brightscript">
+        <![CDATA[
+
+sub init()
+	m.top.id = "MainScreen"
+end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    handled = true
+    print "MainScreen Processing event..." + key
+    if(press)
+        m.global.key = key
+    else
+        m.global.key = "none"
+    end if
+
+    return handled
+end function
+
+]]>
+    </script>
+
+    <children>
+
+        <Group id="MainGroup">
+
+            <BSTestLib:BSTestLib
+                id="BSTestLib"
+    ></BSTestLib:BSTestLib>
+
+        </Group>
+    </children>
+
+</component>
+
+

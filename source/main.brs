@@ -38,20 +38,24 @@ sub showChannelSGScreen()
 
     timeout = 16 ' in milliseconds
     bufferSize = 0
+    pingpong = 0
 
-    TestFunction()
+    'TestFunction(1)
 
     While continue
         event = m.port.waitMessage(timeout)
         'event = m.port.GetMessage() ' get a message, if available
 
         if m.global.key <> "none"
-            print "key is :" + m.global.key
+            print "key is :" m.global.key
 
             if(m.global.key = "OK")
-
-                TestFunction()
-
+                m.global.key = "none"
+                pingpong ++
+                if(pingpong > 2)
+                    pingpong =1
+                end if
+                TestFunction(pingpong)
             end if
         end if
 
@@ -176,80 +180,40 @@ sub showChannelSGScreen()
 
 end sub
 
-sub TestFunction()
+sub TestFunction(screen as Integer)
     count = m.scene.getChildCount()
     while count > 0
         print "removing scene" + StrI(count)
-        print m.scene.getChild(count - 1).id
         m.scene.removeChildIndex(count - 1)
         count = m.scene.getChildCount()
     end while
 
-    content = createObject("RoSGNode","Poster") 'createObject("RoSGNode", "Roku_Youi_Scene")
-    content.id = "Youi"
-    content.focusable = true
-
-    'Create a root node for animation tests
-    node = content.createChild("Rectangle")
-    node.id = "TestNode"
-    node.width  = 1280
-    node.height = 720
-    node.duration="3"
-    node.repeat="true"
-    node.easeFunction="linear"
-    node.color = "0x0"
-
-    node2 = content.createChild("Rectangle")
-    node2.id = "TestNode2"
-    node2.width  = 1280
-    node2.height = 720
-    node2.duration="3"
-    node2.repeat="true"
-    node2.easeFunction="linear"
-    node2.color = "0x0"
-
-    node3 = node.createChild("Rectangle")
-    node3.id = "TestNode3"
-    node3.width  = 1280
-    node3.height = 720
-    node3.duration="3"
-    node3.repeat="true"
-    node3.easeFunction="linear"
-    node3.color = "0xBADBADBA"
-
-    node4 = node2.createChild("Rectangle")
-    node4.id = "TestNode4"
-    node4.width  = 1280
-    node4.height = 720
-    node4.duration="3"
-    node4.repeat="true"
-    node4.easeFunction="linear"
-    node4.color = "0xBADBADBA"
-
-    anim = node3.createChild("Animation")
-    anim.id = "AnimationTestNode"
-    anim.duration="3"
-    anim.repeat="true"
-    anim.easeFunction="linear"
-    fi = anim.createChild("FloatFieldInterpolator")
-    fi.id = "myInterp"
-    fi.key="[0.0, 0.50, 0.75, 1.0]"
-    fi.keyValue="[0.0, 0.50, 0.75, 1.0]"
-    fi.fieldToInterp = "TestNode4.opacity" 'content.id + ".opacity"
-
     print "creating scene"
+
+    m.lib = createObject("RoSGNode","ComponentLibrary")
+    m.lib.id="BSTestLib"
+    if (screen = 1)
+        m.lib.uri="http://107.170.5.4/images/BSTestLib.pkg"
+    else
+        m.lib.uri="http://107.170.5.4/images/BSTestLib2.pkg"
+    end if
+
+    while m.lib.loadStatus = "loading"
+        print m.lib.loadStatus
+    end while
+
+    content = CreateObject("roSGNode", "MainScreen")
+
+    content.AppendChild(m.lib)
+
     m.scene.AppendChild(content)
+
+    content.focusable = true
     content.setFocus(true)
 
-    content.observeField("roSGNodeEvent", m.port)
-
-    anim = content.findNode("AnimationTestNode")
-    if(anim <> invalid)
-        print "starting test animation"
-        anim.control = "start"
-    end if
 end sub
 
+  
 sub CreateSG(xml as Object, node as Object)
     namenum = 0
 
