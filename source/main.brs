@@ -20,6 +20,7 @@ sub showChannelSGScreen()
     connections = {}
     buffer = CreateObject("roByteArray")
     buffer[524288] = 0 ' 512KB
+    bufferSize = 0
     tcpServer = CreateObject("roStreamSocket")
     tcpServer.setMessagePort(m.port) 'notifications for tcp come to msgPort
     addr = createobject("roSocketAddress")
@@ -28,6 +29,17 @@ sub showChannelSGScreen()
     tcpServer.notifyReadable(true)
     tcpServer.listen(4)
     continue = tcpServer.eOK()
+    
+    sendAddr = createobject("roSocketAddress")
+    sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
+    'sendAddr.SetAddress("10.0.0.103:54322") ' Stu's PC
+    tcpClient =  CreateObject("roStreamSocket")
+    tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
+    tcpClient.setSendToAddress(sendAddr)
+    tcpClient.notifyReadable(true)
+
+    tcpClient.Connect()
+    
     if not continue
         print "Error creating listen socket"
     end if
@@ -37,7 +49,6 @@ sub showChannelSGScreen()
     'm.global.control = "start"
 
     timeout = 16 ' in milliseconds
-    bufferSize = 0
     pingpong = 1
 
     TestFunction(pingpong)
@@ -51,11 +62,17 @@ sub showChannelSGScreen()
 
             if(m.global.key = "OK")
                 m.global.key = "none"
-                pingpong ++
-                if(pingpong > 2)
-                    pingpong =1
+                byteSent = tcpClient.SendStr(StrI(pingpong))
+                if (byteSent > 0)
+                    print "TCP CLIENT - Sent current screen ID to " sendAddr.GetAddress() " : " pingpong
+                else
+                    print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
+                    pingpong ++
+                    if(pingpong > 2)
+                        pingpong = 1
+                    end if
+                    TestFunction(pingpong)
                 end if
-                TestFunction(pingpong)
             end if
         end if
 
@@ -63,8 +80,26 @@ sub showChannelSGScreen()
             print "button pressed: ";event.GetInt()
 
         else if type(event)="roSocketEvent"
-            changedID = event.getSocketID()
-            if changedID = tcpServer.getID() and tcpServer.isReadable()
+            changeID = event.getSocketID()
+            if changeID = tcpClient.getID()
+                closed = False
+                if tcpClient.isReadable()
+                    tcpClientRecvBuffer = CreateObject("roByteArray")
+                    tcpClientRecvBuffer[65536] = 0 ' 64KB
+                    received = tcpClient.receive(tcpClientRecvBuffer, 0, 65536)
+                    if (received > 0)
+                        print "TCP CLIENT - received " sendAddr.getAddress() " : " tcpClientRecvBuffer.ToAsciiString()
+                        pingpong = Val(tcpClientRecvBuffer.ToAsciiString())
+                        TestFunction(pingpong)
+                    else
+                        closed = True
+                    end if
+                end if
+                if closed or not tcpClient.eOK()
+                    print "TCP CLIENT - closing connection to " sendAddr.getAddress()
+                    tcpClient.close()
+                end if
+            else if changedID = tcpServer.getID() and tcpServer.isReadable()
                 ' New
                 newConnection = tcpServer.accept()
                 if newConnection = Invalid
@@ -212,6 +247,10 @@ sub TestFunction(screen as Integer)
     else
         m.lib.uri="http://107.170.5.4/images/PDP.pkg"
     end if
+
+   'm.lib.uri="http://107.170.5.4/images/POCSelect.pkg"
+
+
 
     while m.lib.loadStatus = "loading"
         print m.lib.loadStatus
