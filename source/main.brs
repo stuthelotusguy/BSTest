@@ -38,9 +38,9 @@ sub showChannelSGScreen()
 
     timeout = 16 ' in milliseconds
     bufferSize = 0
-    pingpong = 0
+    pingpong = 1
 
-    'TestFunction(1)
+    TestFunction(pingpong)
 
     While continue
         event = m.port.waitMessage(timeout)
@@ -181,6 +181,21 @@ sub showChannelSGScreen()
 end sub
 
 sub TestFunction(screen as Integer)
+
+    if(screen = 1)
+        anim =m.scene.findNode("Out_unknown_1") 
+    else
+        anim =m.scene.findNode("Out_unknown_1") 
+    end if
+
+    if(anim <> invalid)
+        anim.control = "start"
+    else
+        print "Not found"
+    end if
+
+    Sleep(500)
+
     count = m.scene.getChildCount()
     while count > 0
         print "removing scene" + StrI(count)
@@ -193,9 +208,9 @@ sub TestFunction(screen as Integer)
     m.lib = createObject("RoSGNode","ComponentLibrary")
     m.lib.id="BSTestLib"
     if (screen = 1)
-        m.lib.uri="http://107.170.5.4/images/BSTestLib.pkg"
+        m.lib.uri="http://107.170.5.4/images/Lander.pkg"
     else
-        m.lib.uri="http://107.170.5.4/images/BSTestLib2.pkg"
+        m.lib.uri="http://107.170.5.4/images/PDP.pkg"
     end if
 
     while m.lib.loadStatus = "loading"
