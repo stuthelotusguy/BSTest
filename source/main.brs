@@ -87,8 +87,7 @@ sub showChannelSGScreen()
                     received = tcpClient.receive(tcpClientRecvBuffer, 0, 65536)
                     if (received > 0)
                         print "TCP CLIENT - received " sendAddr.getAddress() " : " tcpClientRecvBuffer.ToAsciiString()
-                        pingpong = Val(tcpClientRecvBuffer.ToAsciiString())
-                        TestFunction(pingpong)
+                        TestFunction(tcpClientRecvBuffer.ToAsciiString())
                     else
                         closed = True
                     end if
@@ -213,43 +212,47 @@ sub showChannelSGScreen()
 
 end sub
 
-sub TestFunction(screen as String)
+sub TestFunction(command as String)
 
-    anim =m.scene.findNode("Out_unknown_1") 
-
-    if(anim <> invalid)
-        anim.control = "start"
-    else
-        print "Not found"
-    end if
-
-    Sleep(500)
-
-    count = m.scene.getChildCount()
-    while count > 0
-        print "removing scene" + StrI(count)
-        m.scene.removeChildIndex(count - 1)
+    com =  left(command, 4)
+    name = right(command, len(command) - 5)
+    if com = "load"
         count = m.scene.getChildCount()
-    end while
+        while count > 0
+            print "removing scene" + StrI(count)
+            m.scene.removeChildIndex(count - 1)
+            count = m.scene.getChildCount()
+        end while
 
-    print "creating scene"
+        print "creating scene"
 
-    m.lib = createObject("RoSGNode","ComponentLibrary")
-    m.lib.id="BSTestLib"
-    m.lib.uri="http://107.170.5.4/images/" + screen
+        m.lib = createObject("RoSGNode","ComponentLibrary")
+        m.lib.id="BSTestLib"
+        m.lib.uri="http://107.170.5.4/images/" + screen
 
-    while m.lib.loadStatus = "loading"
-        print m.lib.loadStatus +" " + m.lib.uri
-    end while
+        while m.lib.loadStatus = "loading"
+            print m.lib.loadStatus +" " + m.lib.uri
+        end while
 
-    content = CreateObject("roSGNode", "MainScreen")
+        content = CreateObject("roSGNode", "MainScreen")
 
-    content.AppendChild(m.lib)
+        content.AppendChild(m.lib)
 
-    m.scene.AppendChild(content)
+        m.scene.AppendChild(content)
 
-    content.focusable = true
-    content.setFocus(true)
+        content.focusable = true
+        content.setFocus(true)
+    else if com = "play"
+        print "playing \"" name "\""
+        anim =m.scene.findNode(name) 
+
+        if(anim <> invalid)
+            anim.control = "start"
+            Sleep(250)
+        else
+            print "Not found"
+        end if
+    end if
 
 end sub
 
