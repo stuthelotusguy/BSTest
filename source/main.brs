@@ -96,7 +96,7 @@ sub showChannelSGScreen()
                     print "TCP CLIENT - closing connection to " sendAddr.getAddress()
                     tcpClient.close()
                 end if
-            else if changedID = tcpServer.getID() and tcpServer.isReadable()
+            else if changeID = tcpServer.getID() and tcpServer.isReadable()
                 ' New
                 newConnection = tcpServer.accept()
                 if newConnection = Invalid
@@ -109,7 +109,7 @@ sub showChannelSGScreen()
                 end if
             else
                 ' Activity on an open connection
-                connection = connections[Stri(changedID)]
+                connection = connections[Stri(changeID)]
                 closed = False
                 if connection.isReadable()
                     received = connection.receive(buffer, bufferSize, 65536)
@@ -120,9 +120,9 @@ sub showChannelSGScreen()
                     end if
                 end if
                 if closed or not connection.eOK()
-                    print "closing connection ID" changedID
+                    print "closing connection ID" changeID
                     connection.close()
-                    connections.delete(Stri(changedID))
+                    connections.delete(Stri(changeID))
                     if (bufferSize > 0)
                         print "total byte received : " bufferSize
                         startTime = CreateObject("roDateTime")
@@ -228,7 +228,7 @@ sub TestFunction(command as String)
 
         m.lib = createObject("RoSGNode","ComponentLibrary")
         m.lib.id="BSTestLib"
-        m.lib.uri="http://107.170.5.4/images/" + screen
+        m.lib.uri="http://107.170.5.4/images/" + name
 
         while m.lib.loadStatus = "loading"
             print m.lib.loadStatus +" " + m.lib.uri
