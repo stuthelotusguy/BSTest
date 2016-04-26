@@ -31,8 +31,8 @@ sub showChannelSGScreen()
     continue = tcpServer.eOK()
     
     sendAddr = createobject("roSocketAddress")
-    sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
-    'sendAddr.SetAddress("10.0.0.103:54322") ' Stu's PC
+    'sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
+    sendAddr.SetAddress("10.0.0.103:54322") ' Stu's PC
     tcpClient =  CreateObject("roStreamSocket")
     tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
     tcpClient.setSendToAddress(sendAddr)
@@ -49,30 +49,28 @@ sub showChannelSGScreen()
     'm.global.control = "start"
 
     timeout = 16 ' in milliseconds
-    pingpong = 1
 
-    TestFunction(pingpong)
+    byteSent = tcpClient.SendStr("start")
+    if (byteSent > 0)
+        print "TCP CLIENT - Sent start request to " sendAddr.GetAddress()
+    else
+        print "TCP CLIENT - No connection to " sendAddr.GetAddress()
+        TestFunction("Dots.pkg")
+    end if
 
     While continue
         event = m.port.waitMessage(timeout)
         'event = m.port.GetMessage() ' get a message, if available
 
         if m.global.key <> "none"
-            print "key is :" m.global.key
-
-            if(m.global.key = "OK")
-                m.global.key = "none"
-                byteSent = tcpClient.SendStr(StrI(pingpong))
-                if (byteSent > 0)
-                    print "TCP CLIENT - Sent current screen ID to " sendAddr.GetAddress() " : " pingpong
-                else
-                    print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
-                    pingpong ++
-                    if(pingpong > 2)
-                        pingpong = 1
-                    end if
-                    TestFunction(pingpong)
-                end if
+            key = m.global.key
+            m.global.key = "none"
+            print "key is :" key
+            byteSent = tcpClient.SendStr(key)
+            if (byteSent > 0)
+                print "TCP CLIENT - Sent key \"" key "\" to " sendAddr.GetAddress()
+            else
+                print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
             end if
         end if
 
@@ -215,13 +213,9 @@ sub showChannelSGScreen()
 
 end sub
 
-sub TestFunction(screen as Integer)
+sub TestFunction(screen as String)
 
-    if(screen = 1)
-        anim =m.scene.findNode("Out_unknown_1") 
-    else
-        anim =m.scene.findNode("Out_unknown_1") 
-    end if
+    anim =m.scene.findNode("Out_unknown_1") 
 
     if(anim <> invalid)
         anim.control = "start"
@@ -242,18 +236,10 @@ sub TestFunction(screen as Integer)
 
     m.lib = createObject("RoSGNode","ComponentLibrary")
     m.lib.id="BSTestLib"
-    if (screen = 1)
-        m.lib.uri="http://107.170.5.4/images/Lander.pkg"
-    else
-        m.lib.uri="http://107.170.5.4/images/PDP.pkg"
-    end if
-
-   'm.lib.uri="http://107.170.5.4/images/POCSelect.pkg"
-
-
+    m.lib.uri="http://107.170.5.4/images/" + screen
 
     while m.lib.loadStatus = "loading"
-        print m.lib.loadStatus
+        print m.lib.loadStatus +" " + m.lib.uri
     end while
 
     content = CreateObject("roSGNode", "MainScreen")
