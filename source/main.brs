@@ -32,7 +32,7 @@ sub showChannelSGScreen()
     
     sendAddr = createobject("roSocketAddress")
     'sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
-    sendAddr.SetAddress("10.0.0.103:54322") ' Stu's PC
+    sendAddr.SetAddress("10.0.0.117:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
     m.tcpClient.setSendToAddress(sendAddr)
@@ -95,6 +95,7 @@ sub showChannelSGScreen()
                 if closed or not m.tcpClient.eOK()
                     print "TCP CLIENT - closing connection to " sendAddr.getAddress()
                     m.tcpClient.close()
+                    continue = false
                 end if
             else if changeID = tcpServer.getID() and tcpServer.isReadable()
                 ' New
@@ -230,8 +231,9 @@ sub TestFunction(command as String)
         m.lib.id="BSTestLib"
         m.lib.uri="http://107.170.5.4/images/" + name
 
+        print m.lib.loadStatus +" " + m.lib.uri
         while m.lib.loadStatus = "loading"
-            print m.lib.loadStatus +" " + m.lib.uri
+            'print m.lib.loadStatus +" " + m.lib.uri
         end while
 
         content = CreateObject("roSGNode", "MainScreen")
@@ -254,7 +256,7 @@ sub TestFunction(command as String)
         end if
     end if
     
-    m.tcpClient.SendStr("OK")
+    m.tcpClient.SendStr("ACK")
 
 end sub
 
