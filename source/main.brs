@@ -33,12 +33,12 @@ sub showChannelSGScreen()
     sendAddr = createobject("roSocketAddress")
     'sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
     sendAddr.SetAddress("10.0.0.103:54322") ' Stu's PC
-    tcpClient =  CreateObject("roStreamSocket")
-    tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
-    tcpClient.setSendToAddress(sendAddr)
-    tcpClient.notifyReadable(true)
+    m.tcpClient =  CreateObject("roStreamSocket")
+    m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
+    m.tcpClient.setSendToAddress(sendAddr)
+    m.tcpClient.notifyReadable(true)
 
-    tcpClient.Connect()
+    m.tcpClient.Connect()
     
     if not continue
         print "Error creating listen socket"
@@ -50,7 +50,7 @@ sub showChannelSGScreen()
 
     timeout = 16 ' in milliseconds
 
-    byteSent = tcpClient.SendStr("start")
+    byteSent = m.tcpClient.SendStr("start")
     if (byteSent > 0)
         print "TCP CLIENT - Sent start request to " sendAddr.GetAddress()
     else
@@ -66,9 +66,9 @@ sub showChannelSGScreen()
             key = m.global.key
             m.global.key = "none"
             print "key is :" key
-            byteSent = tcpClient.SendStr(key)
+            byteSent = m.tcpClient.SendStr(key)
             if (byteSent > 0)
-                print "TCP CLIENT - Sent key \"" key "\" to " sendAddr.GetAddress()
+                print "TCP CLIENT - Sent key '" key "' to " sendAddr.GetAddress()
             else
                 print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
             end if
@@ -79,22 +79,22 @@ sub showChannelSGScreen()
 
         else if type(event)="roSocketEvent"
             changeID = event.getSocketID()
-            if changeID = tcpClient.getID()
+            if changeID = m.tcpClient.getID()
                 closed = False
-                if tcpClient.isReadable()
-                    tcpClientRecvBuffer = CreateObject("roByteArray")
-                    tcpClientRecvBuffer[65536] = 0 ' 64KB
-                    received = tcpClient.receive(tcpClientRecvBuffer, 0, 65536)
+                if m.tcpClient.isReadable()
+                    m.tcpClientRecvBuffer = CreateObject("roByteArray")
+                    m.tcpClientRecvBuffer[65536] = 0 ' 64KB
+                    received = m.tcpClient.receive(m.tcpClientRecvBuffer, 0, 65536)
                     if (received > 0)
-                        print "TCP CLIENT - received " sendAddr.getAddress() " : " tcpClientRecvBuffer.ToAsciiString()
-                        TestFunction(tcpClientRecvBuffer.ToAsciiString())
+                        print "TCP CLIENT - received " sendAddr.getAddress() " : " m.tcpClientRecvBuffer.ToAsciiString()
+                        TestFunction(m.tcpClientRecvBuffer.ToAsciiString())
                     else
                         closed = True
                     end if
                 end if
-                if closed or not tcpClient.eOK()
+                if closed or not m.tcpClient.eOK()
                     print "TCP CLIENT - closing connection to " sendAddr.getAddress()
-                    tcpClient.close()
+                    m.tcpClient.close()
                 end if
             else if changeID = tcpServer.getID() and tcpServer.isReadable()
                 ' New
@@ -243,7 +243,7 @@ sub TestFunction(command as String)
         content.focusable = true
         content.setFocus(true)
     else if com = "play"
-        print "playing \"" name "\""
+        print "playing '" + name + "'"
         anim =m.scene.findNode(name) 
 
         if(anim <> invalid)
@@ -253,6 +253,8 @@ sub TestFunction(command as String)
             print "Not found"
         end if
     end if
+    
+    m.tcpClient.SendStr("OK")
 
 end sub
 
