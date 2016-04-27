@@ -9,8 +9,11 @@
 sub init()
 	'm.top.backgroundURI = "pkg:/images/purplebg.jpg"
     m.top.id = "Roku_Youi_Scene"
-    m.label = m.top.findNode("Label")
     m.keyinput = "none"
+    loop = m.top.findNode("Loop_unknown_1")
+    if loop <> invalid
+        loop.control = "start"
+    end if
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
@@ -29,16 +32,108 @@ end function
 </script>
 
 <children>
-
-  <Label
-    id = "Label"
-    visible = "true"
-    height = "44"
-    width = "0"
-    font = "font:MediumBoldSystemFont"
-    text = "You.i Client-Server Test!"
-    horizAlign = "left"
-    vertAlign = "center" />
+    <Group id="wait_connect" translation="[0, 0]" scaleRotateCenter="[0, 0]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
+        <Rectangle id="BG_3" translation="[0, 0]" scaleRotateCenter="[640, 360]" scale="[1, 1]" rotation="0" opacity="1" visible="1" width="1280" height="720" color="0x000000FF"/>
+        <Poster id="BG_Shapes_png_4" translation="[-33.6667, -0.333333]" scaleRotateCenter="[673.667, 360.333]" scale="[1, 1]" rotation="0" opacity="0.999789" visible="1" width="1347.33" height="720.667" uri="http://107.170.5.4/images/BG-Shapes.png"/>
+        <Poster id="Icon_Loader_Dot_png_5" translation="[541.415, 344.667]" scaleRotateCenter="[15.3333, 15.3333]" scale="[0.999595, 0.999595]" rotation="0" opacity="0.999067" visible="1" width="30.6667" height="30.6667" uri="http://107.170.5.4/images/Icon-Loader-Dot.png"/>
+        <Poster id="Icon_Loader_Dot_png_6" translation="[707.959, 344.667]" scaleRotateCenter="[15.3333, 15.3333]" scale="[1, 1]" rotation="0" opacity="1" visible="1" width="30.6667" height="30.6667" uri="http://107.170.5.4/images/Icon-Loader-Dot.png"/>
+        <Poster id="Icon_Loader_Dot_png_7" translation="[624.626, 344.667]" scaleRotateCenter="[15.3333, 15.3333]" scale="[1.00034, 1.00034]" rotation="0" opacity="1" visible="1" width="30.6667" height="30.6667" uri="http://107.170.5.4/images/Icon-Loader-Dot.png"/>
+        <Rectangle id="Overlay_8" translation="[0, 0]" scaleRotateCenter="[640, 360]" scale="[1, 1]" rotation="0" opacity="0" visible="1" width="1280" height="720" color="0x000000FF"/>
+        <Animation id="In_unknown_1" duration="0.5" repeat="0">
+            <FloatFieldInterpolator fieldToInterp="BG_Shapes_png_4.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0.905812, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [854.667, 344.667],  [741.003, 344.667],  [708, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0.774989, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [5, 5],  [1.90004, 1.90004],  [1, 1]]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [624.667, 344.667],  [624.667, 344.667],  [624.667, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0.901295, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [5, 5],  [1.39482, 1.39482],  [1, 1]]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [394.667, 344.667],  [538.178, 344.667],  [541.333, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0.978489, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [5, 5],  [1.08604, 1.08604],  [1, 1]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Overlay_8.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0, 0]"
+				/>
+        </Animation>
+        <Animation id="Loop_unknown_1" duration="0.666" repeat="1">
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [708, 344.667],  [559.817, 344.667],  [541.333, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 1, 0.736771, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_5.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [1, 1],  [0.887495, 0.887495],  [1, 1]]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [624.667, 344.667],  [698.758, 344.667],  [708, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 1, 1, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_6.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [1, 1],  [1, 1],  [1, 1]]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.translation"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [541.333, 344.667],  [615.424, 344.667],  [624.667, 344.667]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 1, 1, 1]"
+				/>
+            <Vector2DFieldInterpolator fieldToInterp="Icon_Loader_Dot_png_7.scale"
+                key="[0, 0.5, 1]"
+                keyvalue="[  [1, 1],  [1.17103, 1.17103],  [1, 1]]"
+				/>
+            <FloatFieldInterpolator fieldToInterp="Overlay_8.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0, 0]"
+				/>
+        </Animation>
+        <Animation id="Out_unknown_1" duration="0.333" repeat="0">
+            <FloatFieldInterpolator fieldToInterp="Overlay_8.opacity"
+                key="[0, 0.5, 1]"
+                keyvalue="[ 0, 0.497128, 1]"
+				/>
+        </Animation>
+    </Group>
 
 </children>
 

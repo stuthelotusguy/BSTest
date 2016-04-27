@@ -3,10 +3,83 @@ sub Main()
     showChannelSGScreen()
 end sub
 
+function TryToConnect() as Boolean
+
+    ClearExistingScreens()
+    wait_connect = m.scene.findNode("wait_connect")
+    if wait_connect <> invalid
+        wait_connect.visible = 1
+    end if
+
+tryagain:
+    if(m.buffer <> invalid)
+        m.buffer = invalid
+    end if
+    m.buffer = CreateObject("roByteArray")
+    m.buffer[524288] = 0 ' 512KB
+    m.bufferSize = 0
+    if(m.tcpServer <> invalid)
+        m.tcpServer.close()
+        for each id in m.connections
+            m.connections[id].close()
+        end for
+        m.tcpServer = invalid
+    end if
+    if(m.tcpClient <> invalid)
+        m.tcpClient.close()
+        m.tcpClient = invalid
+    end if
+    m.connections = {}
+    m.tcpServer = CreateObject("roStreamSocket")
+    m.tcpServer.setMessagePort(m.port) 'notifications for tcp come to msgPort
+    addr = createobject("roSocketAddress")
+    addr.setPort(54321)
+    m.tcpServer.setAddress(addr)
+    m.tcpServer.notifyReadable(true)
+    m.tcpServer.listen(4)
+    continue = m.tcpServer.eOK()
+    
+    m.sendAddr = createobject("roSocketAddress")
+    'm.sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
+    m.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
+    m.tcpClient =  CreateObject("roStreamSocket")
+    m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
+    m.tcpClient.setSendToAddress(m.sendAddr)
+    m.tcpClient.notifyReadable(true)
+
+    m.tcpClient.Connect()
+    
+    if not continue
+        print "Error creating listen socket"
+        sleep(1000)
+        goto tryagain
+    end if
+
+    Sleep(250)
+
+    byteSent = m.tcpClient.SendStr("start")
+    if (byteSent > 0)
+        print "TCP CLIENT - Sent start request to " m.sendAddr.GetAddress()
+    else
+        print "TCP CLIENT - No connection to " m.sendAddr.GetAddress()
+        sleep(1000)
+        goto tryagain
+    end if
+
+    wait_connect = m.scene.findNode("wait_connect")
+    if wait_connect <> invalid
+        wait_connect.visible = 0
+    end if
+    return continue
+end function
+
 sub showChannelSGScreen()
     m.screen = CreateObject("roSGScreen")
     m.port = CreateObject("roMessagePort")
     m.screen.setMessagePort(m.port)
+
+    m.scene = m.screen.CreateScene("Roku_Youi_Scene")
+    m.screen.show()
 
     m.global = m.screen.getGlobalNode()
     m.global.id = "GlobalNode"
@@ -14,49 +87,13 @@ sub showChannelSGScreen()
     m.global.addFields( {groups : 0, images : 0, solids : 0, text : 0, animations : 0, tracks : 0, keys : 0} )
     m.global.key = "none"
 
-    m.scene = m.screen.CreateScene("Roku_Youi_Scene")
-    m.screen.show()
-
-    connections = {}
-    buffer = CreateObject("roByteArray")
-    buffer[524288] = 0 ' 512KB
-    bufferSize = 0
-    tcpServer = CreateObject("roStreamSocket")
-    tcpServer.setMessagePort(m.port) 'notifications for tcp come to msgPort
-    addr = createobject("roSocketAddress")
-    addr.setPort(54321)
-    tcpServer.setAddress(addr)
-    tcpServer.notifyReadable(true)
-    tcpServer.listen(4)
-    continue = tcpServer.eOK()
-    
-    sendAddr = createobject("roSocketAddress")
-    'sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
-    sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
-    m.tcpClient =  CreateObject("roStreamSocket")
-    m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
-    m.tcpClient.setSendToAddress(sendAddr)
-    m.tcpClient.notifyReadable(true)
-
-    m.tcpClient.Connect()
-    
-    if not continue
-        print "Error creating listen socket"
-    end if
-
     m.global.ObserveField("key","changetext")
     'm.global.setMessagePort(m.port)
     'm.global.control = "start"
 
     timeout = 16 ' in milliseconds
 
-    byteSent = m.tcpClient.SendStr("start")
-    if (byteSent > 0)
-        print "TCP CLIENT - Sent start request to " sendAddr.GetAddress()
-    else
-        print "TCP CLIENT - No connection to " sendAddr.GetAddress()
-        TestFunction("Dots.pkg")
-    end if
+    continue = TryToConnect()
 
     While continue
         event = m.port.waitMessage(timeout)
@@ -69,9 +106,10 @@ sub showChannelSGScreen()
                 print "key is :" key
                 byteSent = m.tcpClient.SendStr(key)
                 if (byteSent > 0)
-                    print "TCP CLIENT - Sent key '" key "' to " sendAddr.GetAddress()
+                    print "TCP CLIENT - Sent key '" key "' to " m.sendAddr.GetAddress()
                 else
-                    print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
+                    print "TCP CLIENT - No connection to " m.sendAddr.GetAddress() ". Switching screen locally."
+                    continue = TryToConnect()
                 end if
             end if
         end if
@@ -84,120 +122,53 @@ sub showChannelSGScreen()
             if changeID = m.tcpClient.getID()
                 closed = False
                 if m.tcpClient.isReadable()
-                    m.tcpClientRecvBuffer = CreateObject("roByteArray")
-                    m.tcpClientRecvBuffer[65536] = 0 ' 64KB
-                    received = m.tcpClient.receive(m.tcpClientRecvBuffer, 0, 65536)
+                    m.tcpClientRecvbuffer = CreateObject("roByteArray")
+                    m.tcpClientRecvbuffer[65536] = 0 ' 64KB
+                    received = m.tcpClient.receive(m.tcpClientRecvbuffer, 0, 65536)
                     if (received > 0)
-                        print "TCP CLIENT - received " sendAddr.getAddress() " : " m.tcpClientRecvBuffer.ToAsciiString()
-                        TestFunction(m.tcpClientRecvBuffer.ToAsciiString())
+                        print "TCP CLIENT - received " m.sendAddr.getAddress() " : " m.tcpClientRecvbuffer.ToAsciiString()
+                        LoadPackage(m.tcpClientRecvbuffer.ToAsciiString())
                     else
-                        closed = True
+                        closed = true
                     end if
                 end if
-                if closed or not m.tcpClient.eOK()
-                    print "TCP CLIENT - closing connection to " sendAddr.getAddress()
+                if closed and not m.tcpClient.eOK()
+                    print "TCP CLIENT - closing connection to " m.sendAddr.getAddress()
                     m.tcpClient.close()
-                    continue = false
+                    continue = TryToConnect()
                 end if
-            else if changeID = tcpServer.getID() and tcpServer.isReadable()
+            else if changeID = m.tcpServer.getID() and m.tcpServer.isReadable()
                 ' New
-                newConnection = tcpServer.accept()
+                newConnection = m.tcpServer.accept()
                 if newConnection = Invalid
                     print "accept failed"
                 else
                     print "accepted new connection ID" newConnection.getID()
                     newConnection.notifyReadable(true)
                     newConnection.setMessagePort(m.port)
-                    connections[Stri(newConnection.getID())] = newConnection
+                    m.connections[Stri(newConnection.getID())] = newConnection
                 end if
             else
                 ' Activity on an open connection
-                connection = connections[Stri(changeID)]
-                closed = False
-                if connection.isReadable()
-                    received = connection.receive(buffer, bufferSize, 65536)
-                    print "received chunk :" received
-                    bufferSize += received
-                    if received = 0 'client closed
-                        closed = True
+                connection = m.connections[Stri(changeID)]
+                if connection <> invalid
+                    closed = False
+                    if connection.isReadable()
+                        received = connection.receive(m.buffer, m.bufferSize, 65536)
+                        print "received chunk :" received
+                        m.bufferSize += received
+                        if received = 0 'client closed
+                            closed = true
+                        end if
                     end if
-                end if
-                if closed or not connection.eOK()
-                    print "closing connection ID" changeID
-                    connection.close()
-                    connections.delete(Stri(changeID))
-                    if (bufferSize > 0)
-                        print "total byte received : " bufferSize
-                        startTime = CreateObject("roDateTime")
-                        content = createObject("RoSGNode","Poster") 'createObject("RoSGNode", "Roku_Youi_Scene")
-                        content.id = "Youi"
-                        content.focusable = true
-                        contentxml = createObject("roXMLElement")
-                        contentxml.parse(buffer.ToAsciiString())
-                        if contentxml.getName()="sc"
-                            print("getContent: scene found")
-                            body = contentxml.GetBody()
-                            etype = lcase(type(body))
-                            if etype = "roxmllist"
-
-                                count = m.scene.getChildCount()
-                                while count > 0
-                                    print "removing scene" + StrI(count)
-                                    print m.scene.getChild(count - 1).id
-                                    m.scene.removeChildIndex(count - 1)
-                                    count = m.scene.getChildCount()
-                                end while
-
-                                CreateSG(body, content)
-
-                                print "Loaded: "
-                                print "groups" m.global.groups 
-                                print "images" m.global.images 
-                                print "solids" m.global.solids 
-                                print "text" m.global.text 
-                                print "animations" m.global.animations 
-                                print "tracks" m.global.tracks 
-                                print "keys" m.global.keys
-
-                                m.global.groups  = 0
-                                m.global.images   = 0
-                                m.global.solids   = 0
-                                m.global.text   = 0
-                                m.global.animations  = 0 
-                                m.global.tracks   = 0
-                                m.global.keys  = 0
-                                
-                                print "creating scene"
-                                m.scene.AppendChild(content)
-                                content.setFocus(true)
-
-                                'stop
-
-                                content.observeField("roSGNodeEvent", m.port)
-
-                                anim = content.findNode("Repeat_Logo_Animation_60")
-                                if(anim <> invalid)
-                                    print "starting animation " anim.id
-                                    intr = anim.getchild(0)
-                                    print "Interpolating on " intr.fieldToInterp
-                                    print "keys " intr.key
-                                    print "keyvalue " intr.keyvalue
-                                    parent = anim.getParent()
-                                    while parent <> invalid
-                                        print "Parent " parent.id
-                                        parent = parent.getParent()
-                                    end while
-                                    anim.control = "start"
-                                end if
-                                
-                            end if
-                        else
-                            print "getContent: scene NOT found. Must start with <sc>"
-                        end If
-                        endTime = CreateObject("roDateTime")
-                        totalTime = endTime.AsSeconds() - startTime.AsSeconds()
-                        print "Total time (in second):" totalTime
-                        bufferSize = 0 ' we consumed the buffer
+                    if closed or not connection.eOK()
+                        print "closing connection ID" changeID
+                        connection.close()
+                        m.connections.delete(Stri(changeID))
+                        if (m.bufferSize > 0)
+                            print "total byte received : " m.bufferSize
+                            ParseData()
+                        end if
                     end if
                 end if
             end if
@@ -208,34 +179,110 @@ sub showChannelSGScreen()
         end if
     end while
 
-    tcpServer.close()
-    for each id in connections
-        connections[id].close()
+    m.tcpServer.close()
+    for each id in m.connections
+        m.connections[id].close()
     end for
 
 end sub
 
-sub TestFunction(command as String)
+sub ClearExistingScreens()
+    if m.scene <> invalid
+        count = m.scene.getChildCount()
+        while count > 2 'Our "wait_connect and master node"
+            print "removing scene" + StrI(count)
+            print m.scene.getChild(count - 1).id
+            m.scene.removeChildIndex(count - 1)
+            count = m.scene.getChildCount()
+        end while
+    end if
+end sub
+
+sub ParseData()
+    startTime = CreateObject("roDateTime")
+    content = createObject("RoSGNode","Poster") 'createObject("RoSGNode", "Roku_Youi_Scene")
+    content.id = "Youi"
+    content.focusable = true
+    contentxml = createObject("roXMLElement")
+    contentxml.parse(m.buffer.ToAsciiString())
+    if contentxml.getName()="sc"
+        print("getContent: scene found")
+        body = contentxml.GetBody()
+        etype = lcase(type(body))
+        if etype = "roxmllist"
+
+            ClearExistingScreens()
+
+            CreateSG(body, content)
+
+            print "Loaded: "
+            print "groups" m.global.groups 
+            print "images" m.global.images 
+            print "solids" m.global.solids 
+            print "text" m.global.text 
+            print "animations" m.global.animations 
+            print "tracks" m.global.tracks 
+            print "keys" m.global.keys
+
+            m.global.groups  = 0
+            m.global.images   = 0
+            m.global.solids   = 0
+            m.global.text   = 0
+            m.global.animations  = 0 
+            m.global.tracks   = 0
+            m.global.keys  = 0
+                                
+            print "creating scene"
+            m.scene.AppendChild(content)
+            content.setFocus(true)
+
+            'stop
+
+            content.observeField("roSGNodeEvent", m.port)
+
+            anim = content.findNode("Repeat_Logo_Animation_60")
+            if(anim <> invalid)
+                print "starting animation " anim.id
+                intr = anim.getchild(0)
+                print "Interpolating on " intr.fieldToInterp
+                print "keys " intr.key
+                print "keyvalue " intr.keyvalue
+                parent = anim.getParent()
+                while parent <> invalid
+                    print "Parent " parent.id
+                    parent = parent.getParent()
+                end while
+                anim.control = "start"
+            end if
+                                
+        end if
+    else
+        print "getContent: scene NOT found. Must start with <sc>"
+    end If
+    endTime = CreateObject("roDateTime")
+    totalTime = endTime.AsSeconds() - startTime.AsSeconds()
+    print "Total time (in second):" totalTime
+    m.bufferSize = 0 ' we consumed the m.buffer
+end sub
+
+sub LoadPackage(command as String)
 
     com =  left(command, 4)
     name = right(command, len(command) - 5)
     if com = "load"
-        count = m.scene.getChildCount()
-        while count > 0
-            print "removing scene" + StrI(count)
-            m.scene.removeChildIndex(count - 1)
-            count = m.scene.getChildCount()
-        end while
-
+        ClearExistingScreens()
         print "creating scene"
 
         m.lib = createObject("RoSGNode","ComponentLibrary")
         m.lib.id="BSTestLib"
-        m.lib.uri="http://107.170.5.4/images/" + name
-
+        if left(name, 4) = "file"
+            m.lib.uri=name
+        else
+            m.lib.uri="http://107.170.5.4/images/" + name
+        end if
         print m.lib.loadStatus +" " + m.lib.uri
         while m.lib.loadStatus = "loading"
-            'print m.lib.loadStatus +" " + m.lib.uri
+            print m.lib.loadStatus '+" " + m.lib.uri
         end while
 
         content = CreateObject("roSGNode", "MainScreen")
@@ -252,13 +299,17 @@ sub TestFunction(command as String)
 
         if(anim <> invalid)
             anim.control = "start"
-            Sleep(250)
+            dur = 100 + anim.duration * 1000
+            print dur
+            'Sleep(dur)
         else
             print "Not found"
         end if
     end if
     
-    m.tcpClient.SendStr("ACK")
+    if m.tcpClient <> invalid
+        m.tcpClient.SendStr("ACK")
+    end if
 
 end sub
 
@@ -387,6 +438,7 @@ sub CreateSG(xml as Object, node as Object)
                 item.horizAlign = attributes.tj
             end if
             item.vertAlign = "top"
+            item.lineSpacing = -1
             PrintoutOfItem(item)
         else if(elemname="a")
             m.global.animations ++
@@ -468,3 +520,4 @@ sub PrintoutOfItem(node as Object)
     print "width" node.width
     print "height" node.height
 end sub
+
