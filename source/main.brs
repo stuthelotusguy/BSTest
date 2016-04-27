@@ -32,7 +32,7 @@ sub showChannelSGScreen()
     
     sendAddr = createobject("roSocketAddress")
     'sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
-    sendAddr.SetAddress("10.0.0.117:54322") ' Stu's PC
+    sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
     m.tcpClient.setSendToAddress(sendAddr)
@@ -65,12 +65,14 @@ sub showChannelSGScreen()
         if m.global.key <> "none"
             key = m.global.key
             m.global.key = "none"
-            print "key is :" key
-            byteSent = m.tcpClient.SendStr(key)
-            if (byteSent > 0)
-                print "TCP CLIENT - Sent key '" key "' to " sendAddr.GetAddress()
-            else
-                print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
+            if(key <> invalid)  'Roku 1 crashed with this error. Not seen otherwise.
+                print "key is :" key
+                byteSent = m.tcpClient.SendStr(key)
+                if (byteSent > 0)
+                    print "TCP CLIENT - Sent key '" key "' to " sendAddr.GetAddress()
+                else
+                    print "TCP CLIENT - No connection to " sendAddr.GetAddress() ". Switching screen locally."
+                end if
             end if
         end if
 
