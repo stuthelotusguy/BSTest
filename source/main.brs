@@ -247,7 +247,7 @@ sub LoadPackage(command as String)
         videoclip.StreamBitrates = [0]
         videoclip.StreamUrls = name
         videoclip.StreamQualities = ["HD"]
-        videoclip.StreamFormat = "mp4"
+        videoclip.StreamFormat = "hls"
         m.video = CreateObject("roVideoScreen")
         m.video.setMessagePort(m.port)
         m.video.SetContent(videoclip)
