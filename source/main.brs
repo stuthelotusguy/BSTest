@@ -40,8 +40,9 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
+    m.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer"
     'm.sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
-    m.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
+    'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
     m.tcpClient.setSendToAddress(m.sendAddr)
@@ -198,14 +199,71 @@ sub ClearExistingScreens()
     end if
 end sub
 
+sub LoadPackage(command as String)
+
+    com =  left(command, 4)
+    name = right(command, len(command) - 5)
+    if com = "load"
+        ClearExistingScreens()
+        print "creating scene"
+
+        m.lib = createObject("RoSGNode","ComponentLibrary")
+        m.lib.id="BSTestLib"
+        if left(name, 4) = "file"
+            m.lib.uri=name
+        else
+            m.lib.uri="http://107.170.5.4/images/" + name
+        end if
+        print m.lib.loadStatus +" " + m.lib.uri
+        while m.lib.loadStatus = "loading"
+            print m.lib.loadStatus '+" " + m.lib.uri
+        end while
+
+        content = CreateObject("roSGNode", "MainScreen")
+
+        content.AppendChild(m.lib)
+
+        m.scene.AppendChild(content)
+
+        content.focusable = true
+        content.setFocus(true)
+    else if com = "play"
+        print "playing '" + name + "'"
+        anim =m.scene.findNode(name) 
+
+        if(anim <> invalid)
+            anim.control = "start"
+            dur = 100 + anim.duration * 1000
+            print dur
+            'Sleep(dur)
+        else
+            print "Not found"
+        end if
+    end if
+    
+    if m.tcpClient <> invalid
+        m.tcpClient.SendStr("ACK")
+    end if
+
+end sub
+
+  
 sub ParseData()
+
+    ClearExistingScreens()
+    wait_connect = m.scene.findNode("wait_connect")
+    if wait_connect <> invalid
+        wait_connect.visible = 1
+        wait_connect.setFocus(true)
+    end if
+
     startTime = CreateObject("roDateTime")
-    content = createObject("RoSGNode","Poster") 'createObject("RoSGNode", "Roku_Youi_Scene")
-    content.id = "Youi"
-    content.focusable = true
     contentxml = createObject("roXMLElement")
     contentxml.parse(m.buffer.ToAsciiString())
     if contentxml.getName()="sc"
+        content = createObject("RoSGNode","Poster")
+        content.id = "Youi"
+        content.focusable = true
         print("getContent: scene found")
         body = contentxml.GetBody()
         etype = lcase(type(body))
@@ -265,55 +323,6 @@ sub ParseData()
     m.bufferSize = 0 ' we consumed the m.buffer
 end sub
 
-sub LoadPackage(command as String)
-
-    com =  left(command, 4)
-    name = right(command, len(command) - 5)
-    if com = "load"
-        ClearExistingScreens()
-        print "creating scene"
-
-        m.lib = createObject("RoSGNode","ComponentLibrary")
-        m.lib.id="BSTestLib"
-        if left(name, 4) = "file"
-            m.lib.uri=name
-        else
-            m.lib.uri="http://107.170.5.4/images/" + name
-        end if
-        print m.lib.loadStatus +" " + m.lib.uri
-        while m.lib.loadStatus = "loading"
-            print m.lib.loadStatus '+" " + m.lib.uri
-        end while
-
-        content = CreateObject("roSGNode", "MainScreen")
-
-        content.AppendChild(m.lib)
-
-        m.scene.AppendChild(content)
-
-        content.focusable = true
-        content.setFocus(true)
-    else if com = "play"
-        print "playing '" + name + "'"
-        anim =m.scene.findNode(name) 
-
-        if(anim <> invalid)
-            anim.control = "start"
-            dur = 100 + anim.duration * 1000
-            print dur
-            'Sleep(dur)
-        else
-            print "Not found"
-        end if
-    end if
-    
-    if m.tcpClient <> invalid
-        m.tcpClient.SendStr("ACK")
-    end if
-
-end sub
-
-  
 sub CreateSG(xml as Object, node as Object)
     namenum = 0
 
@@ -322,7 +331,17 @@ sub CreateSG(xml as Object, node as Object)
         if(elemname="g")
             m.global.groups ++
             attributes = elem.getAttributes()
-            item = node.createChild("Group")
+            'if(left(attributes.id, 8) = "ListRoot")
+            '    print "Found list node!"
+            '    item = node.createChild("RowList")
+	        '    item.numRows = 1
+	        '    item.itemSize = [200, 200]
+	        '    item.rowHeights = [200]
+	        '    item.rowFocusAnimationStyle = "floatingFocus"
+	        '    item.visible = true
+            'else
+                item = node.createChild("Group")
+            'end if
             item.id = attributes.id
             item.rotation = attributes.rz
             item.opacity = attributes.t
