@@ -201,6 +201,8 @@ end sub
 
 sub LoadPackage(command as String)
 
+    m.video = invalid
+
     com =  left(command, 4)
     name = right(command, len(command) - 5)
     if com = "load"
@@ -239,6 +241,18 @@ sub LoadPackage(command as String)
         else
             print "Not found"
         end if
+    else if com = "pvid"
+        print "playing video: " name
+        videoclip = CreateObject("roAssociativeArray")
+        videoclip.StreamBitrates = [0]
+        videoclip.StreamUrls = name
+        videoclip.StreamQualities = ["HD"]
+        videoclip.StreamFormat = "mp4"
+        m.video = CreateObject("roVideoScreen")
+        m.video.setMessagePort(m.port)
+        m.video.SetContent(videoclip)
+        m.video.show()
+       
     end if
     
     if m.tcpClient <> invalid
@@ -539,4 +553,3 @@ sub PrintoutOfItem(node as Object)
     print "width" node.width
     print "height" node.height
 end sub
-

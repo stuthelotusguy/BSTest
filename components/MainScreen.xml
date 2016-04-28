@@ -29,10 +29,11 @@ end function
         <Group id="MainGroup">
 
             <BSTestLib:BSTestLib
-                id="BSTestLib"
-    ></BSTestLib:BSTestLib>
-
+                id="BSTestLib">
+            </BSTestLib:BSTestLib>
         </Group>
+
+
     </children>
 
 </component>
