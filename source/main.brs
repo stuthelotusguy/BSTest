@@ -197,6 +197,7 @@ sub ClearExistingScreens()
             count = m.scene.getChildCount()
         end while
     end if
+    m.scene.getChild(1).visible = 1
 end sub
 
 sub LoadPackage(command as String)
@@ -232,12 +233,12 @@ sub LoadPackage(command as String)
     else if com = "play"
         print "playing '" + name + "'"
         anim =m.scene.findNode(name) 
-
+        'stop
         if(anim <> invalid)
             anim.control = "start"
             dur = 100 + anim.duration * 1000
-            print dur
-            'Sleep(dur)
+            'print dur
+            'Sleep(dur * 3)
         else
             print "Not found"
         end if
