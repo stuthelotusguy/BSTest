@@ -39,7 +39,7 @@ end function
         <Poster id="Icon_Loader_Dot_png_6" translation="[707.959, 344.667]" scaleRotateCenter="[15.3333, 15.3333]" scale="[1, 1]" rotation="0" opacity="1" visible="1" width="30.6667" height="30.6667" uri="http://107.170.5.4/images/Icon-Loader-Dot.png"/>
         <Poster id="Icon_Loader_Dot_png_7" translation="[624.626, 344.667]" scaleRotateCenter="[15.3333, 15.3333]" scale="[1.00034, 1.00034]" rotation="0" opacity="1" visible="1" width="30.6667" height="30.6667" uri="http://107.170.5.4/images/Icon-Loader-Dot.png"/>
         <Rectangle id="Overlay_8" translation="[0, 0]" scaleRotateCenter="[640, 360]" scale="[1, 1]" rotation="0" opacity="0" visible="1" width="1280" height="720" color="0x000000FF"/>
-        <Animation id="In_unknown_1" duration="0.5" repeat="0">
+        <Animation id="wait_connect_In" duration="0.5" repeat="0">
             <FloatFieldInterpolator fieldToInterp="BG_Shapes_png_4.opacity"
                 key="[0, 0.5, 1]"
                 keyvalue="[ 0, 0.905812, 1]"
@@ -127,7 +127,7 @@ end function
                 keyvalue="[ 0, 0, 0]"
 				/>
         </Animation>
-        <Animation id="Out_unknown_1" duration="0.333" repeat="0">
+        <Animation id="wait_connect_Out" duration="0.333" repeat="0">
             <FloatFieldInterpolator fieldToInterp="Overlay_8.opacity"
                 key="[0, 0.5, 1]"
                 keyvalue="[ 0, 0.497128, 1]"
