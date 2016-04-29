@@ -173,10 +173,14 @@ sub showChannelSGScreen()
                     end if
                 end if
             end if
-        else if event <> invalid
-            print "Event: " + type(event)
         else if type(event) = "roSGScreenEvent"
-            if msg.isScreenClosed() then return
+            if event.isScreenClosed() then return
+        else if type(event) = "roVideoScreenEvent"
+            if event.isScreenClosed()
+                if m.tcpClient <> invalid
+                    m.tcpClient.SendStr("back")
+                end if
+            end if
         end if
     end while
 
