@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sc>
+    <s x="0" y="0" ax="960" ay="540" sx="1" sy="1" rz="0" w="1920" h="1080" t="1" c="0x000000FF"/>
+    <i x="-50.5" y="-0.5" ax="1010.5" ay="540.5" sx="1" sy="1" rz="0" w="2021" h="1081" t="1" url="BG-Shapes.png"/>
+    <i x="0" y="0" ax="960" ay="540" sx="1" sy="1" rz="0" w="1920" h="1080" t="0.3" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/772/294/BigBuckBunny_Hero.png"/>
+    <i x="166.919" y="211.676" ax="245" ay="367" sx="1" sy="1" rz="0" w="489.109" h="732.648" t="0.999989" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/772/294/BigBuckBunny_Poster.jpg"/>
+    <i x="717.438" y="210" ax="117" ay="176" sx="1" sy="1" rz="0" w="234" h="352" t="0.999989" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/7/718/Camanindes1_Poster.jpg"/>
+    <i x="717.438" y="593.998" ax="117" ay="176" sx="1" sy="1" rz="0" w="234" h="352.002" t="0.999989" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/820/219/TearsOfSteel_Poster.jpg"/>
+    <i x="988.437" y="210" ax="117" ay="176" sx="1" sy="1" rz="0" w="234.001" h="352" t="0.999989" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/411/535/ElephantsDream_Poster__134330.jpg"/>
+    <i x="978.437" y="583.998" ax="127" ay="186" sx="1" sy="1" rz="0" w="254.001" h="372.002" t="0.999999" url="Border-Small.png"/>
+    <i x="988.437" y="593.998" ax="117" ay="176" sx="1" sy="1" rz="0" w="234.001" h="352.002" t="0.999989" url="http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/1000/463/Sintel_Poster.jpg"/>
+    <i x="986.482" y="722.993" ax="0.5" ay="112.5" sx="237.91" sy="1" rz="0" w="237.911" h="225.007" t="0.999999" url="Gradient-Small.png"/>
+    <s x="988.437" y="593.998" ax="117" ay="176" sx="1" sy="1" rz="0" w="234.001" h="352.002" t="0.3" c="0x000000FF"/>
+    <t x="1006.42" y="897.866" ax="0" ay="29.1998" sx="1" sy="1" rz="0" w="64.5701" h="30.1342" t="0.999999" c="0xFFFFFFFF" fe="1" ff="Arial" ft="Sintel" fs="Regular" fz="26" fw="1"/>
+    <i x="113.375" y="31.7499" ax="95.5" ay="89" sx="1" sy="1" rz="0" w="191.025" h="178.013" t="1" url="Youi-Logo.png"/>
+</sc>
