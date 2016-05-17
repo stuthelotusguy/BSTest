@@ -201,20 +201,75 @@ function LoadXMLData(node, topnode) {
 
 function setup() {
 
-    var port = 54322;
-    var host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
+    var host = "ws://localhost:54323"
+    //var host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //var host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //var host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //var host = "10.0.0.111"; // MattC's PC
     //var host = "ws://10.0.0.100"; // Stu's PC 
     //var host = "10.0.0.112"; // Stu's Linux VM
 
-    //openSocket(host);
-    //send("start");
+    openSocket(host);
 
     //window.resizeBy(1920, 1080);
 
-    ServerMessage(host, "images/Lander.xml");
+    //ServerMessage(host, "Server/Lander.xml");
+}
+
+function openSocket(host) {
+
+    var wsImpl = window.WebSocket || window.MozWebSocket;
+
+    // create a new websocket and connect
+    window.ws = new wsImpl(host);
+
+    // when the connection is established, this method is called
+    ws.onopen = OnServerConnect;
+
+    // when the connection is closed, this method is called
+    ws.onclose = OnServerDisconnect;
+
+    // Log errors
+    window.ws.onerror = OnServerError;
+
+    // when data is comming from the server, this metod is called
+    window.ws.onmessage = OnServerMessage;
+}
+
+function OnServerConnect() {
+    console.log('WebSocket Connected. Sending \'start\'');
+    window.ws.send("start");
+}
+
+function OnServerDisconnect() {
+    console.log('WebSocket Disconnected');
+}
+
+function OnServerError(error) {
+    console.log('WebSocket Error ' + error);
+}
+
+function OnServerMessage(evt) {
+    console.log('receive server rendering instruction. parsing...');
+    //console.log(evt.data);
+    
+    var xml = jQuery.parseXML(evt.data)
+    if (xml)
+    {
+        // Remove all children before Loading
+        stage.removeChildren();
+
+        var root = xml.childNodes[0];
+        LoadXMLData(root, stage);
+
+        renderer.render(stage);
+        console.log("rendered");
+        animate();
+    }
+    else
+    {
+        console.log("Could not parse rendering instructions")
+    }
 }
 
 function ServerMessage(host, msg) {
