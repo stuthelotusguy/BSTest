@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <sc>
-	<g id="unknown_1" x="0" y="0" ax="0" ay="0" sx="1" sy="1" rz="0" t="1">
-		<s id="BG_3" x="0" y="0" ax="960" ay="540" sx="1" sy="1" rz="0" t="1" w="1280" h="720" c="0x000000FF"/>
-		<i id="BG_Shapes_png_4" x="-50.5" y="-0.5" ax="1010.5" ay="540.5" sx="1" sy="1" rz="0" t="0" w="1347.33" h="720.667" url="BG-Shapes.png"/>
-		<i id="Icon_Loader_Dot_png_5" x="1282" y="517" ax="23" ay="23" sx="1" sy="1" rz="0" t="0" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
-		<i id="Icon_Loader_Dot_png_6" x="937" y="517" ax="23" ay="23" sx="1" sy="1" rz="0" t="0" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
-		<i id="Icon_Loader_Dot_png_7" x="592" y="517" ax="23" ay="23" sx="1" sy="1" rz="0" t="0" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
-		<s id="Overlay_8" x="0" y="0" ax="960" ay="540" sx="1" sy="1" rz="0" t="0" w="1280" h="720" c="0x000000FF"/>
+	<g id="unknown_1" x="0" y="0" ax="0" ay="0" sx="1" sy="1" rz="0" t="1" v="1">
+		<s id="BG_3" x="0" y="0" ax="640" ay="360" sx="1" sy="1" rz="0" t="1" v="1" w="1280" h="720" c="0x000000FF"/>
+		<i id="BG_Shapes_png_4" x="-33.6667" y="-0.333333" ax="673.667" ay="360.333" sx="1" sy="1" rz="0" t="1" v="1" w="1347.33" h="720.667" url="BG-Shapes.png"/>
+		<i id="Icon_Loader_Dot_png_5" x="541.333" y="344.667" ax="15.3333" ay="15.3333" sx="1" sy="1" rz="0" t="1.00001" v="1" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
+		<i id="Icon_Loader_Dot_png_6" x="708" y="344.667" ax="15.3333" ay="15.3333" sx="1" sy="1" rz="0" t="1" v="1" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
+		<i id="Icon_Loader_Dot_png_7" x="624.667" y="344.667" ax="15.3333" ay="15.3333" sx="0.999998" sy="0.999998" rz="0" t="1" v="1" w="30.6667" h="30.6667" url="Icon-Loader-Dot.png"/>
+		<s id="Overlay_8" x="0" y="0" ax="640" ay="360" sx="1" sy="1" rz="0" t="0" v="1" w="1280" h="720" c="0x000000FF"/>
 		<a id="In_unknown_1" d="0.5" r="0">
 			<at t="1" f="BG_Shapes_png_4.opacity">
 				<k t="0" x="0"/>

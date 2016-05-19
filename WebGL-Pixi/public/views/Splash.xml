@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <sc>
-	<g id="unknown_1" x="0" y="0" ax="0" ay="0" sx="1" sy="1" rz="0" t="1">
-		<s id="Bg_3" x="0" y="0" ax="961" ay="541" sx="1" sy="1" rz="0" t="1" w="1281.33" h="721.333" c="0x000000FF"/>
-		<i id="BG_Shapes_png_4" x="-49.875" y="-0.375" ax="1010.5" ay="540.5" sx="1" sy="1" rz="0" t="1" w="1347.33" h="720.667" url="BG-Shapes.png"/>
-		<i id="Logo_Border_png_5" x="710" y="307.5" ax="250" ay="232.5" sx="1" sy="1" rz="0" t="0" w="333.333" h="310" url="Logo-Border.png"/>
-		<g id="Spinner_6" x="0" y="0" ax="960" ay="540" sx="1" sy="1" rz="0" t="0">
-			<i id="Logo_Y_png_7" x="791.5" y="488.5" ax="50.5" ay="60.5" sx="1" sy="1" rz="0" t="1" w="67.3333" h="80.6667" url="Logo-Y.png"/>
-			<i id="Logo_O_png_8" x="881" y="498" ax="43" ay="44" sx="1" sy="1" rz="0" t="1" w="57.3333" h="58.6667" url="Logo-O.png"/>
-			<i id="Logo_U_png_9" x="965.5" y="496.5" ax="37.5" ay="47.5" sx="1" sy="1" rz="0" t="1" w="50" h="63.3333" url="Logo-U.png"/>
-			<i id="Logo_Dot_png_10" x="1041" y="556.5" ax="13" ay="13.5" sx="1" sy="1" rz="0" t="1" w="17.3333" h="18" url="Logo-Dot.png"/>
-			<i id="Logo_I_png_11" x="1067.5" y="476.25" ax="18.5" ay="56" sx="1" sy="1" rz="0" t="1" w="24.6667" h="74.6667" url="Logo-I.png"/>
-			<i id="Logo_Y_png_12" x="791.5" y="488.5" ax="50.5" ay="60.5" sx="1" sy="1" rz="0" t="0" w="67.3333" h="80.6667" url="Logo-Y.png"/>
-			<i id="Logo_O_png_13" x="881" y="498" ax="43" ay="44" sx="1" sy="1" rz="0" t="0" w="57.3333" h="58.6667" url="Logo-O.png"/>
-			<i id="Logo_U_png_14" x="965.5" y="496.5" ax="37.5" ay="47.5" sx="1" sy="1" rz="0" t="0" w="50" h="63.3333" url="Logo-U.png"/>
-			<i id="Logo_Dot_png_15" x="1041" y="556.5" ax="13" ay="13.5" sx="1" sy="1" rz="0" t="0" w="17.3333" h="18" url="Logo-Dot.png"/>
-			<i id="Logo_I_png_16" x="1067.5" y="476.25" ax="18.5" ay="56" sx="1" sy="1" rz="0" t="0" w="24.6667" h="74.6667" url="Logo-I.png"/>
+	<g id="unknown_1" x="0" y="0" ax="0" ay="0" sx="1" sy="1" rz="0" t="1" v="1">
+		<s id="Bg_3" x="0" y="0" ax="640.667" ay="360.667" sx="1" sy="1" rz="0" t="1" v="1" w="1281.33" h="721.333" c="0x000000FF"/>
+		<i id="BG_Shapes_png_4" x="-33.25" y="-0.25" ax="673.667" ay="360.333" sx="1" sy="1" rz="0" t="1" v="1" w="1347.33" h="720.667" url="BG-Shapes.png"/>
+		<i id="Logo_Border_png_5" x="473.333" y="205" ax="166.667" ay="155" sx="1" sy="1" rz="0" t="1" v="1" w="333.333" h="310" url="Logo-Border.png"/>
+		<g id="Spinner_6" x="0" y="0" ax="640" ay="360" sx="1" sy="1" rz="0" t="1" v="1">
+			<i id="Logo_Y_png_7" x="527.667" y="325.667" ax="33.6667" ay="40.3333" sx="1" sy="1" rz="0" t="1" v="1" w="67.3333" h="80.6667" url="Logo-Y.png"/>
+			<i id="Logo_O_png_8" x="587.333" y="332" ax="28.6667" ay="29.3333" sx="1" sy="1" rz="0" t="1" v="1" w="57.3333" h="58.6667" url="Logo-O.png"/>
+			<i id="Logo_U_png_9" x="643.667" y="331" ax="25" ay="31.6667" sx="1" sy="1" rz="0" t="1" v="1" w="50" h="63.3333" url="Logo-U.png"/>
+			<i id="Logo_Dot_png_10" x="694" y="371" ax="8.66667" ay="9" sx="1" sy="1" rz="0" t="1" v="1" w="17.3333" h="18" url="Logo-Dot.png"/>
+			<i id="Logo_I_png_11" x="711.667" y="317.5" ax="12.3333" ay="37.3333" sx="1" sy="1" rz="0" t="1" v="1" w="24.6667" h="74.6667" url="Logo-I.png"/>
+			<i id="Logo_Y_png_12" x="527.667" y="325.667" ax="33.6667" ay="40.3333" sx="1" sy="1" rz="0" t="0" v="1" w="67.3333" h="80.6667" url="Logo-Y.png"/>
+			<i id="Logo_O_png_13" x="587.333" y="332" ax="28.6667" ay="29.3333" sx="1" sy="1" rz="0" t="0" v="1" w="57.3333" h="58.6667" url="Logo-O.png"/>
+			<i id="Logo_U_png_14" x="643.667" y="331" ax="25" ay="31.6667" sx="1" sy="1" rz="0" t="0" v="1" w="50" h="63.3333" url="Logo-U.png"/>
+			<i id="Logo_Dot_png_15" x="694" y="371" ax="8.66667" ay="9" sx="1" sy="1" rz="0" t="0" v="1" w="17.3333" h="18" url="Logo-Dot.png"/>
+			<i id="Logo_I_png_16" x="711.667" y="317.5" ax="12.3333" ay="37.3333" sx="1" sy="1" rz="0" t="0" v="1" w="24.6667" h="74.6667" url="Logo-I.png"/>
 			<a id="Loop_Spinner_6" d="2.5" r="1">
 				<at t="2" f="Logo_Y_png_7.translation">
 					<k t="0" x="527.667" y="325.667"/>
@@ -416,32 +416,32 @@
 				<k t="0.5" x="107.8"/>
 				<k t="1" x="90"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="Red_Solid_10_5.opacity">
 				<k t="0" x="0"/>
 				<k t="0.5" x="1"/>
 				<k t="1" x="1"/>
 			</at>
-			<at t="2" f=".scale">
+			<at t="2" f="Red_Solid_10_5.scale">
 				<k t="0" x="1" y="0"/>
 				<k t="0.5" x="1" y="0.750009"/>
 				<k t="1" x="1" y="1"/>
 			</at>
-			<at t="2" f=".translation">
+			<at t="2" f="EndCap_Logo_png_6.translation">
 				<k t="0" x="629.458" y="335.754"/>
 				<k t="0.5" x="510.582" y="297.032"/>
 				<k t="1" x="470.958" y="284.125"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="EndCap_Logo_png_6.opacity">
 				<k t="0" x="0"/>
 				<k t="0.5" x="1"/>
 				<k t="1" x="1"/>
 			</at>
-			<at t="2" f=".translation">
+			<at t="2" f="EndCap_Logo_png_7.translation">
 				<k t="0" x="636.75" y="337.917"/>
 				<k t="0.5" x="754.658" y="376.261"/>
 				<k t="1" x="793.958" y="389.042"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="EndCap_Logo_png_7.opacity">
 				<k t="0" x="0"/>
 				<k t="0.5" x="1"/>
 				<k t="1" x="1"/>
@@ -763,30 +763,30 @@
 				<k t="0.5" x="90"/>
 				<k t="1" x="90"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="Red_Solid_10_5.opacity">
 				<k t="0" x="1"/>
 				<k t="1" x="1"/>
 			</at>
-			<at t="2" f=".scale">
+			<at t="2" f="Red_Solid_10_5.scale">
 				<k t="0" x="1" y="1"/>
 				<k t="0.5" x="1" y="1"/>
 				<k t="1" x="1" y="1"/>
 			</at>
-			<at t="2" f=".translation">
+			<at t="2" f="EndCap_Logo_png_6.translation">
 				<k t="0" x="470.958" y="284.125"/>
 				<k t="0.5" x="470.958" y="284.125"/>
 				<k t="1" x="470.958" y="284.125"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="EndCap_Logo_png_6.opacity">
 				<k t="0" x="1"/>
 				<k t="1" x="1"/>
 			</at>
-			<at t="2" f=".translation">
+			<at t="2" f="EndCap_Logo_png_7.translation">
 				<k t="0" x="793.958" y="389.042"/>
 				<k t="0.5" x="793.958" y="389.042"/>
 				<k t="1" x="793.958" y="389.042"/>
 			</at>
-			<at t="1" f=".opacity">
+			<at t="1" f="EndCap_Logo_png_7.opacity">
 				<k t="0" x="1"/>
 				<k t="1" x="1"/>
 			</at>
