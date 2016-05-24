@@ -22,10 +22,9 @@ var position;
 var target;
 var tween, tweenBack;
 */
-var sceneNodes = {};
-var animations = {};
 
 var stage = new PIXI.Container();
+var activityIndicator = new PIXI.Container();
 var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.view);
 setup();
@@ -41,13 +40,24 @@ function scaleToFit() {
     renderer.view.style.height = h + "px";
     //this part adjusts the ratio:
     renderer.resize(w, h);
-    stage.scale.x = w / 1920;
-    stage.scale.y = h / 1080;
+    stage.scale.x = w / 1280;
+    stage.scale.y = h / 720;
 }
 
 var firstime = true;
 
-function LoadXMLData(node, topnode) {
+function LoadXMLData(container, node, topnode) {
+
+    if (container.animations == null)
+    {
+        container.animations = {};
+    }
+
+    if (container.sceneNodes == null)
+    {
+        container.sceneNodes = {};
+    }
+
     for (var i = 0; i < node.childNodes.length; i++) {
         var child = node.childNodes[i];
         var type = child.nodeName;
@@ -81,16 +91,16 @@ function LoadXMLData(node, topnode) {
             group.scale.x = attr.sx.nodeValue;
             group.scale.y = attr.sy.nodeValue;
 
-            sceneNodes[group.id] = group;
+            container.sceneNodes[group.id] = group;
             topnode.addChild(group);
-            LoadXMLData(child, group);
+            LoadXMLData(container, child, group);
         } else if (type == "i") {
             var image = new PIXI.Sprite.fromImage(attr.url.nodeValue, true, 1.0);
             image.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.LINEAR;
 
             image.id = attr.id.nodeValue;
-            image.width = attr.w.nodeValue;
-            image.height = attr.h.nodeValue;
+            image.width = attr.w.nodeValue * attr.sx.nodeValue;
+            image.height = attr.h.nodeValue * attr.sy.nodeValue;
 
             //image.anchor.x = -attr.ax.nodeValue / image.width;
             //image.anchor.y = -attr.ay.nodeValue / image.height;
@@ -100,9 +110,6 @@ function LoadXMLData(node, topnode) {
 
             image.position.x = attr.x.nodeValue;
             image.position.y = attr.y.nodeValue;
-
-            image.scale.x = attr.sx.nodeValue;
-            image.scale.y = attr.sy.nodeValue;
 
             image.alpha = attr.t.nodeValue;
 
@@ -126,7 +133,7 @@ function LoadXMLData(node, topnode) {
             image.mousemove = image.touchmove = function (data) {
             }
 
-            sceneNodes[image.id] = image;
+            container.sceneNodes[image.id] = image;
             topnode.addChild(image);
 
             firstime = false;
@@ -152,7 +159,7 @@ function LoadXMLData(node, topnode) {
             // draw a rectangle
             graphics.drawRect(attr.x.nodeValue, attr.y.nodeValue, attr.w.nodeValue * attr.sx.nodeValue, attr.h.nodeValue * attr.sy.nodeValue);
 
-            sceneNodes[graphics.id] = graphics;
+            container.sceneNodes[graphics.id] = graphics;
 
             topnode.addChild(graphics);
         } else if (type == "t") {
@@ -183,7 +190,7 @@ function LoadXMLData(node, topnode) {
             richText.id = attr.id.nodeValue;
             richText.x = attr.x.nodeValue;
             richText.y = attr.y.nodeValue;
-            sceneNodes[richText.id] = richText;
+            container.sceneNodes[richText.id] = richText;
             topnode.addChild(richText);
 
 /*
@@ -217,14 +224,14 @@ function LoadXMLData(node, topnode) {
             };
 
             console.log("loading '" + animation.id + "' animation");
-            LoadXMLAnimationTracks(child, animation);
-            animations[animation.id] = animation;
+            LoadXMLAnimationTracks(container, child, animation);
+            container.animations[animation.id] = animation;
         }
 
     }
 }
 
-function LoadXMLAnimationTracks(node, animation) {
+function LoadXMLAnimationTracks(container, node, animation) {
     for (var i = 0; i < node.childNodes.length; i++) {
         var child = node.childNodes[i];
         var type = child.nodeName;
@@ -234,7 +241,7 @@ function LoadXMLAnimationTracks(node, animation) {
             var objectName = attr.f.nodeValue.substring(0, dotPos);
             var fieldName = attr.f.nodeValue.substring(dotPos+1);
             console.log("Loading '" + attr.f.nodeValue + "' track");
-            var object = sceneNodes[objectName];
+            var object = container.sceneNodes[objectName];
             if (object)
             {
                 var keyframes = [];
@@ -242,82 +249,108 @@ function LoadXMLAnimationTracks(node, animation) {
 
                 if(keyframes.length > 0)
                 {
-                    var tween = {};
+                    var tweens = [];
 
-                    if (fieldName == "scaleRotateCenter") {
-                        var pivot = {slave: object, x: keyframes[0].x, y: keyframes[0].y, startX: keyframes[0].x, startY: keyframes[0].y};
-                        tween = new TWEEN.Tween(pivot);
-                        for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                            tween.to({x: keyframes[keyID].x, y: keyframes[keyID].y}, animation.duration * keyframes[keyID].timePerc);
+                    for (var keyID = 1; keyID < keyframes.length; keyID++) {
+                        if (fieldName == "scale") {
+                            var from = {
+                                slave: object, 
+                                x: object.width * keyframes[keyID-1].x, 
+                                y: object.height * keyframes[keyID-1].y, 
+                                startX: object.width * keyframes[keyID-1].x, 
+                                startY: object.height * keyframes[keyID-1].y
+                            };
+                            var to = {
+                                x: object.width * keyframes[keyID].x, 
+                                y: object.height * keyframes[keyID].y
+                            }
                         }
-                        tween.onUpdate(function() {
-                            this.slave.pivot.x = this.x / this.slave.width;
-                            this.slave.pivot.y = this.y / this.slave.height;
-                        });
-                        tween.onComplete(function() {
-                            this.x = this.startX;
-                            this.y = this.startY;
-                        });
-                    } else if (fieldName == "translation") {
-                        var position = {slave: object, x: keyframes[0].x, y: keyframes[0].y, startX: keyframes[0].x, startY: keyframes[0].y};
-                        tween = new TWEEN.Tween(position);
-                        for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                            tween.to({x: keyframes[keyID].x, y: keyframes[keyID].y}, animation.duration * keyframes[keyID].timePerc);
+                        else
+                        {
+                            var from = {
+                                slave: object, 
+                                x: keyframes[keyID-1].x, 
+                                y: keyframes[keyID-1].y, 
+                                startX: keyframes[keyID-1].x, 
+                                startY: keyframes[keyID-1].y
+                            };
+                            var to = {
+                                x: keyframes[keyID].x, 
+                                y: keyframes[keyID].y
+                            }
                         }
-                        tween.onUpdate(function() {
-                            //console.log("moving " + this.slave.id + ".position.x from " + this.slave.position.x + " to " + this.x);
-                            this.slave.position.x = this.x;
-                            this.slave.position.y = this.y;
-                        });
-                        tween.onComplete(function() {
-                            this.x = this.startX;
-                            this.y = this.startY;
-                        });
-                    } else if (fieldName == "scale") {
-                        var scale = {slave: object, x: keyframes[0].x, y: keyframes[0].y, startX: keyframes[0].x, startY: keyframes[0].y};
-                        tween = new TWEEN.Tween(scale);
-                        for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                            tween.to({x: keyframes[keyID].x, y: keyframes[keyID].y}, animation.duration * keyframes[keyID].timePerc);
+
+                        var duration = (animation.duration * keyframes[keyID].timePerc) - (animation.duration * keyframes[keyID-1].timePerc);
+                        var tween = new TWEEN.Tween(from).to(to, duration);
+
+                        tween.easing(TWEEN.Easing.Linear.None);
+
+                        if (fieldName == "scaleRotateCenter") {
+                            tween.onUpdate(function() {
+                                this.slave.pivot.x = this.x / this.slave.width;
+                                this.slave.pivot.y = this.y / this.slave.height;
+                            });
+                            tween.onComplete(function() {
+                                this.x = this.startX;
+                                this.y = this.startY;
+                            });
+                        } else if (fieldName == "translation") {
+                            tween.onUpdate(function() {
+                                this.slave.position.x = this.x;
+                                this.slave.position.y = this.y;
+                            });
+                            tween.onComplete(function() {
+                                this.x = this.startX;
+                                this.y = this.startY;
+                            });
+                        } else if (fieldName == "scale") {
+                            tween.onUpdate(function() {
+                                this.slave.width = this.x;
+                                this.slave.height = this.y;
+                            });
+                            tween.onComplete(function() {
+                                this.x = this.startX;
+                                this.y = this.startY;
+                            });
+                        } else if (fieldName == "rotation") {
+                            tween.onUpdate(function() {
+                                this.slave.rotation = this.x;
+                            });
+                            tween.onComplete(function() {
+                                this.x = this.startX;
+                            });
+                        } else if (fieldName == "opacity") {
+                            tween.onUpdate(function() {
+                                this.slave.alpha = this.x;
+                            });
+                            tween.onComplete(function() {
+                                this.x = this.startX;
+                            });
                         }
-                        tween.onUpdate(function() {
-                            this.slave.scale.x = this.x;
-                            this.slave.scale.y = this.y;
-                        });
-                        tween.onComplete(function() {
-                            this.x = this.startX;
-                            this.y = this.startY;
-                        });
-                    } else if (fieldName == "rotation") {
-                        var rotation = {slave: object, value: keyframes[0].x, startValue: keyframes[0].x};
-                        tween = new TWEEN.Tween(rotation);
-                        for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                            tween.to({value: keyframes[keyID].x}, animation.duration * keyframes[keyID].timePerc);
-                        }
-                        tween.onUpdate(function() {
-                            this.slave.rotation = this.value;
-                        });
-                        tween.onComplete(function() {
-                            this.value = this.startValue;
-                        });
-                    } else if (fieldName == "opacity") {
-                        var alpha = {slave: object, value: keyframes[0].x, startValue: keyframes[0].x};
-                        tween = new TWEEN.Tween(alpha);
-                        for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                            tween.to({value: keyframes[keyID].x}, animation.duration * keyframes[keyID].timePerc);
-                        }
-                        tween.onUpdate(function() {
-                            this.slave.alpha = this.value;
-                        });
-                        tween.onComplete(function() {
-                            this.value = this.startValue;
-                        });
+
+                        tweens.push(tween);
+
                     }
-                    tween.easing(TWEEN.Easing.Quartic.InOut);
+
+                    // Chain multiple tweens together:  t1->...->tN
+                    // Only applicable if we have more than one tween
+                    if(tweens.length > 1)
+                    {
+                        for (var tweenID = 1; tweenID < tweens.length; tweenID++)
+                        {
+                            tweens[tweenID-1].chain(tweens[tweenID]);
+                        }
+                    }
+
+                    // Repeat single or multiple tween: t1->t1 or t1->...->tN->t1
                     if(animation.repeat)
                     {
-                        tween.chain(tween);
+                        tweens[tweens.length-1].chain(tweens[0]);
                     }
-                    animation.tweens.push(tween);
+
+
+                    // Because tweens are chained, we only need to add the first one.
+                    animation.tweens.push(tweens[0]);
                 }
                 else
                 {
@@ -346,10 +379,10 @@ function LoadXMLAnimationKeyframes(node, keyframes) {
     }
 }
 
-function PlayAnimation(animationID) {
-    if (animations[animationID])
+function PlayAnimation(container, animationID) {
+    if (container.animations[animationID])
     {
-        var tweens = animations[animationID].tweens;
+        var tweens = container.animations[animationID].tweens;
         for(var i = 0; i < tweens.length; ++i) {
             tweens[i].start();
         }
@@ -360,24 +393,27 @@ function PlayAnimation(animationID) {
     }
 }
 
+var host;
 function setup() {
 
-    OpenAndLoadXMLFile("views/ActivityIndicator.xml");
+    OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
+    host = "localhost";
+    //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
+    //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
+    //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
+    //host = "10.0.0.111"; // MattC's PC
+    //host = "10.0.0.100"; // Stu's PC 
+    //host = "10.0.0.112"; // Stu's Linux VM
+
+    /** 
+     * Hack: 
+     * OpenAndLoadXMLFile is asynchronous, which is why we're only starting
+     * the animation asynchronously in 500ms. Otherwise, the animation would
+     * not exist because it is not loaded in memory yet.
+     */
     setTimeout(function() { 
-        PlayAnimation("Loop_unknown_1");
-        PlayAnimation("In_unknown_1");
-    }, 500);
-
-    //var host = "localhost";
-    var host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
-    //var host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
-    //var host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
-    //var host = "10.0.0.111"; // MattC's PC
-    //var host = "10.0.0.100"; // Stu's PC 
-    //var host = "10.0.0.112"; // Stu's Linux VM
-
-    setTimeout(function() { 
+        PlayAnimation(activityIndicator, "Loop_unknown_1");
         openWebSocket(host);
     }, 500);
 
@@ -404,6 +440,7 @@ function openWebSocket(host, port = 60000) {
 
 function OnServerConnect() {
     console.log('WebSocket Connected. Sending \'start\' in just a sec...');
+    PlayAnimation(activityIndicator, "Out_unknown_1");
     setTimeout(function() { 
         window.ws.send("start");
     }, 1000);
@@ -411,6 +448,10 @@ function OnServerConnect() {
 
 function OnServerDisconnect(evt) {
     console.log('WebSocket Disconnected (' + evt.code + ')');
+    setTimeout(function() {
+        activityIndicator.visible = true;
+        openWebSocket(host);
+    }, 5000);
 }
 
 function OnServerMessage(evt) {
@@ -422,10 +463,11 @@ function OnServerMessage(evt) {
         if (xml)
         {
             // Remove all children before Loading
-            stage.removeChildren();
+            stage = new PIXI.Container();
 
             var root = xml.childNodes[0];
-            LoadXMLData(root, stage);
+            scaleToFit();
+            LoadXMLData(stage, root, stage);
 
             renderer.render(stage);
             console.log("rendered");
@@ -438,17 +480,30 @@ function OnServerMessage(evt) {
     }
     else if (evt.data.lastIndexOf("load:", 0) === 0)
     {
-        OpenAndLoadXMLFile("views/" + evt.data.substring(5));
+        activityIndicator.visible = true;
+        stage.removeChildren();
+        stage = null;
+        stage = new PIXI.Container();
+        scaleToFit();
+        OpenAndLoadXMLFile(stage, "views/" + evt.data.substring(5));
     }
     else if (evt.data.lastIndexOf("play:", 0) === 0)
     {
-        setTimeout(function() { 
-            PlayAnimation(evt.data.substring(5));
-        }, 500);
+        if (activityIndicator.visible)
+        {
+            setTimeout(function() { 
+                activityIndicator.visible = false;
+                PlayAnimation(stage, evt.data.substring(5));
+            }, 500);
+        }
+        else
+        {
+            PlayAnimation(stage, evt.data.substring(5));
+        }
     }
 }
 
-function OpenAndLoadXMLFile(xmlFilePath) {
+function OpenAndLoadXMLFile(container, xmlFilePath) {
     console.log('Opening and loading ' + xmlFilePath)
     var req = new XMLHttpRequest();
     req.open("GET", xmlFilePath);
@@ -458,7 +513,7 @@ function OpenAndLoadXMLFile(xmlFilePath) {
             var doc = req.responseText;
             var xml = jQuery.parseXML(doc)
             var root = xml.childNodes[0];
-            LoadXMLData(root, stage);
+            LoadXMLData(container, root, container);
             renderer.render(stage);
             console.log("rendered");
             animate();
@@ -482,6 +537,10 @@ function animate(time) {
 
     requestAnimationFrame(animate);
     renderer.render(stage);
+    if (activityIndicator.visible)
+    {
+        renderer.render(activityIndicator);
+    }
 
     TWEEN.update(time);
 }
