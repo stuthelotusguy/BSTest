@@ -105,9 +105,7 @@ function LoadXMLData(container, node, topnode) {
                         this.selecting = false;
                         // set the interaction data to null
                         this.data = null;
-                        setTimeout(function () {
-                            window.ws.send(group.id);
-                        }, 1000);
+                        window.ws.send(this.id);
                     };
 
                     // set the callbacks for when the mouse or a touch moves
@@ -158,9 +156,7 @@ function LoadXMLData(container, node, topnode) {
                         this.selecting = false;
                         // set the interaction data to null
                         this.data = null;
-                        //setTimeout(function() { 
-                        //    window.ws.send(image.id);
-                        //}, 1000);
+                        //window.ws.send(this.id);                        
                     };
 
                     // set the callbacks for when the mouse or a touch moves
@@ -438,13 +434,13 @@ function setup() {
 
     OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
-    //host = "localhost";
+    host = "localhost";
     //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //host = "10.0.0.111"; // MattC's PC
     //host = "10.0.0.101"; // Stu's PC 
-    host = "10.0.0.113"; // Stu's Linux VM
+    //host = "10.0.0.113"; // Stu's Linux VM
 
     /** 
      * Hack: 
