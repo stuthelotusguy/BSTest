@@ -414,14 +414,14 @@ function setup() {
      */
     setTimeout(function() { 
         PlayAnimation(activityIndicator, "Loop_unknown_1");
-        openWebSocket(host);
+        openWebSocket(host, 60000);
     }, 500);
 
     //window.resizeBy(1920, 1080);
 
 }
 
-function openWebSocket(host, port = 60000) {
+function openWebSocket(host, port) {
 
     var wsImpl = window.WebSocket || window.MozWebSocket;
 
@@ -450,7 +450,7 @@ function OnServerDisconnect(evt) {
     console.log('WebSocket Disconnected (' + evt.code + ')');
     setTimeout(function() {
         activityIndicator.visible = true;
-        openWebSocket(host);
+        openWebSocket(host, 60000);
     }, 5000);
 }
 
