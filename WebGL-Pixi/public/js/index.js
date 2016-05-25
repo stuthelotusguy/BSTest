@@ -73,17 +73,11 @@ function LoadXMLData(container, node, topnode) {
             group.pivot.x = attr.ax.nodeValue;
             group.pivot.y = attr.ay.nodeValue;
 
-            group.anchor.x = -attr.ax.nodeValue / group.width;
-            group.anchor.y = -attr.ay.nodeValue / group.height;
+            //group.anchor.x = -attr.ax.nodeValue / group.width;
+            //group.anchor.y = -attr.ay.nodeValue / group.height;
 
             group.pivot.x = attr.ax.nodeValue / group.width;
             group.pivot.y = attr.ay.nodeValue / group.height;
-
-            var ax = attr.ax.nodeValue;
-            var ay = attr.ay.nodeValue;
-
-            ax /= 1280;
-            ay /= 720;
 
             group.position.x = attr.x.nodeValue;
             group.position.y = attr.y.nodeValue;
@@ -100,14 +94,17 @@ function LoadXMLData(container, node, topnode) {
             image.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.LINEAR;
 
             image.id = attr.id.nodeValue;
-            image.width = attr.w.nodeValue * attr.sx.nodeValue;
-            image.height = attr.h.nodeValue * attr.sy.nodeValue;
+            image.width = attr.w.nodeValue;
+            image.height = attr.h.nodeValue;
 
             //image.anchor.x = -attr.ax.nodeValue / image.width;
             //image.anchor.y = -attr.ay.nodeValue / image.height;
 
             image.pivot.x = attr.ax.nodeValue / image.width;
             image.pivot.y = attr.ay.nodeValue / image.height;
+
+            image.width = attr.w.nodeValue * attr.sx.nodeValue;
+            image.height = attr.h.nodeValue * attr.sy.nodeValue;
 
             image.position.x = attr.x.nodeValue;
             image.position.y = attr.y.nodeValue;
