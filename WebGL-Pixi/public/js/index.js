@@ -95,6 +95,7 @@ function LoadXMLData(container, node, topnode) {
                     // use the mousedown and touchstart
                     group.mousedown = group.touchstart = function (data) {
                         this.selecting = true;
+                        window.ws.send("press:" + this.id);
                     };
 
                     // set the events for when the mouse is released or a touch is released
@@ -105,7 +106,7 @@ function LoadXMLData(container, node, topnode) {
                         this.selecting = false;
                         // set the interaction data to null
                         this.data = null;
-                        window.ws.send(this.id);
+                        window.ws.send("release:" + this.id);
                     };
 
                     // set the callbacks for when the mouse or a touch moves
@@ -434,13 +435,13 @@ function setup() {
 
     OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
-    host = "localhost";
+    //host = "localhost";
     //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //host = "10.0.0.111"; // MattC's PC
     //host = "10.0.0.101"; // Stu's PC 
-    //host = "10.0.0.113"; // Stu's Linux VM
+    host = "10.0.0.113"; // Stu's Linux VM
 
     /** 
      * Hack: 
@@ -455,6 +456,31 @@ function setup() {
 
     //window.resizeBy(1920, 1080);
 
+    var left = keyboard(37),
+      up = keyboard(38),
+      right = keyboard(39),
+      down = keyboard(40),
+      enter = keyboard(13),
+      back = keyboard(8);
+
+    left.release = function () {
+        window.ws.send("left");
+    };
+    up.release = function () {
+        window.ws.send("up");
+    };
+    right.release = function () {
+        window.ws.send("right");
+    };
+    down.release = function () {
+        window.ws.send("down");
+    };
+    enter.release = function () {
+        window.ws.send("OK");
+    };
+    back.release = function () {
+        window.ws.send("back");
+    };
 }
 
 function openWebSocket(host, port) {
@@ -581,3 +607,39 @@ function animate(time) {
     TWEEN.update(time);
 }
 
+function keyboard(keyCode) {
+    var key = {};
+    key.code = keyCode;
+    key.isDown = false;
+    key.isUp = true;
+    key.press = undefined;
+    key.release = undefined;
+    //The `downHandler`
+    key.downHandler = function (event) {
+        if (event.keyCode === key.code) {
+            if (key.isUp && key.press) key.press();
+            key.isDown = true;
+            key.isUp = false;
+        }
+        event.preventDefault();
+    };
+
+    //The `upHandler`
+    key.upHandler = function (event) {
+        if (event.keyCode === key.code) {
+            if (key.isDown && key.release) key.release();
+            key.isDown = false;
+            key.isUp = true;
+        }
+        event.preventDefault();
+    };
+
+    //Attach event listeners
+    window.addEventListener(
+      "keydown", key.downHandler.bind(key), false
+    );
+    window.addEventListener(
+      "keyup", key.upHandler.bind(key), false
+    );
+    return key;
+}
