@@ -87,7 +87,37 @@ function LoadXMLData(container, node, topnode) {
             group.alpha = attr.t.nodeValue;
 
             container.sceneNodes[group.id] = group;
+
+            if (attr.i != undefined) {
+                if (attr.i.nodeValue == "1") {
+
+                    group.interactive = true;
+                    // use the mousedown and touchstart
+                    group.mousedown = group.touchstart = function (data) {
+                        this.selecting = true;
+                    };
+
+                    // set the events for when the mouse is released or a touch is released
+                    group.mouseup = group.mouseupoutside = group.touchend = group.touchendoutside = function (data) {
+                        if (this.selecting) {
+                            console.log("Selected: ", this.id);
+                        }
+                        this.selecting = false;
+                        // set the interaction data to null
+                        this.data = null;
+                        setTimeout(function () {
+                            window.ws.send(group.id);
+                        }, 1000);
+                    };
+
+                    // set the callbacks for when the mouse or a touch moves
+                    group.mousemove = group.touchmove = function (data) {
+                    }
+                }
+            }
+
             topnode.addChild(group);
+
             LoadXMLData(container, child, group);
         } else if (type == "i") {
             var image = new PIXI.Sprite.fromImage(attr.url.nodeValue, true, 1.0);
@@ -111,24 +141,32 @@ function LoadXMLData(container, node, topnode) {
 
             image.alpha = attr.t.nodeValue;
 
-            image.interactive = true;
-            // use the mousedown and touchstart
-            image.mousedown = image.touchstart = function (data) {
-                this.selecting = true;
-            };
+            if (attr.i != undefined) {
+                if (attr.i.nodeValue == "1") {
 
-            // set the events for when the mouse is released or a touch is released
-            image.mouseup = image.mouseupoutside = image.touchend = image.touchendoutside = function (data) {
-                if (this.selecting) {
-                    console.log("Selected: ", this.id);
+                    image.interactive = true;
+                    // use the mousedown and touchstart
+                    image.mousedown = image.touchstart = function (data) {
+                        this.selecting = true;
+                    };
+
+                    // set the events for when the mouse is released or a touch is released
+                    image.mouseup = image.mouseupoutside = image.touchend = image.touchendoutside = function (data) {
+                        if (this.selecting) {
+                            console.log("Selected: ", this.id);
+                        }
+                        this.selecting = false;
+                        // set the interaction data to null
+                        this.data = null;
+                        //setTimeout(function() { 
+                        //    window.ws.send(image.id);
+                        //}, 1000);
+                    };
+
+                    // set the callbacks for when the mouse or a touch moves
+                    image.mousemove = image.touchmove = function (data) {
+                    }
                 }
-                this.selecting = false;
-                // set the interaction data to null
-                this.data = null;
-            };
-
-            // set the callbacks for when the mouse or a touch moves
-            image.mousemove = image.touchmove = function (data) {
             }
 
             container.sceneNodes[image.id] = image;
