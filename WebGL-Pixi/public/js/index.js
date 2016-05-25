@@ -90,6 +90,7 @@ function LoadXMLData(container, node, topnode) {
 
             group.scale.x = attr.sx.nodeValue;
             group.scale.y = attr.sy.nodeValue;
+            group.alpha = attr.t.nodeValue;
 
             container.sceneNodes[group.id] = group;
             topnode.addChild(group);
@@ -161,6 +162,8 @@ function LoadXMLData(container, node, topnode) {
 
             container.sceneNodes[graphics.id] = graphics;
 
+            graphics.alpha = attr.t.nodeValue;
+
             topnode.addChild(graphics);
         } else if (type == "t") {
             var style =
@@ -191,6 +194,8 @@ function LoadXMLData(container, node, topnode) {
             richText.x = attr.x.nodeValue;
             richText.y = attr.y.nodeValue;
             container.sceneNodes[richText.id] = richText;
+            richText.alpha = attr.t.nodeValue;
+
             topnode.addChild(richText);
 
 /*
@@ -320,7 +325,7 @@ function LoadXMLAnimationTracks(container, node, animation) {
                                 this.x = this.startX;
                             });
                         } else if (fieldName == "opacity") {
-                            tween.onUpdate(function() {
+                            tween.onUpdate(function () {
                                 this.slave.alpha = this.x;
                             });
                             tween.onComplete(function() {
@@ -398,13 +403,13 @@ function setup() {
 
     OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
-    host = "localhost";
+    //host = "localhost";
     //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //host = "10.0.0.111"; // MattC's PC
-    //host = "10.0.0.100"; // Stu's PC 
-    //host = "10.0.0.112"; // Stu's Linux VM
+    //host = "10.0.0.101"; // Stu's PC 
+    host = "10.0.0.113"; // Stu's Linux VM
 
     /** 
      * Hack: 
