@@ -42,6 +42,8 @@ function scaleToFit() {
     renderer.resize(w, h);
     stage.scale.x = w / 1280;
     stage.scale.y = h / 720;
+    activityIndicator.scale.x = w / 1280;
+    activityIndicator.scale.y = h / 720;
 }
 
 var firstime = true;
@@ -82,8 +84,8 @@ function LoadXMLData(container, node, topnode) {
             group.position.x = attr.x.nodeValue;
             group.position.y = attr.y.nodeValue;
 
-            group.scale.x = attr.sx.nodeValue;
-            group.scale.y = attr.sy.nodeValue;
+            group.width = attr.sx.nodeValue;
+            group.height = attr.sy.nodeValue;
             group.alpha = attr.t.nodeValue;
 
             container.sceneNodes[group.id] = group;
@@ -119,7 +121,12 @@ function LoadXMLData(container, node, topnode) {
 
             LoadXMLData(container, child, group);
         } else if (type == "i") {
-            var image = new PIXI.Sprite.fromImage(attr.url.nodeValue, true, 1.0);
+            if (attr.url) {
+                var image = new PIXI.Sprite.fromImage(attr.url.nodeValue, true, 1.0);
+            } else {
+                var image = new PIXI.Sprite();
+            }
+
             image.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.LINEAR;
 
             image.id = attr.id.nodeValue;
@@ -260,7 +267,7 @@ function LoadXMLData(container, node, topnode) {
                 tweens: []
             };
 
-            console.log("loading '" + animation.id + "' animation");
+            //console.log("loading '" + animation.id + "' animation");
             LoadXMLAnimationTracks(container, child, animation);
             container.animations[animation.id] = animation;
         }
@@ -277,7 +284,7 @@ function LoadXMLAnimationTracks(container, node, animation) {
             var dotPos = attr.f.nodeValue.lastIndexOf('.');
             var objectName = attr.f.nodeValue.substring(0, dotPos);
             var fieldName = attr.f.nodeValue.substring(dotPos+1);
-            console.log("Loading '" + attr.f.nodeValue + "' track");
+            //console.log("Loading '" + attr.f.nodeValue + "' track");
             var object = container.sceneNodes[objectName];
             if (object)
             {
@@ -289,17 +296,20 @@ function LoadXMLAnimationTracks(container, node, animation) {
                     var tweens = [];
 
                     for (var keyID = 1; keyID < keyframes.length; keyID++) {
-                        if (fieldName == "scale") {
+                        if (fieldName == "scale" ) {
+                            var originalSize = new PIXI.Point();
+                            originalSize.x = object.width/object.scale.x;
+                            originalSize.y = object.height/object.scale.y;
                             var from = {
                                 slave: object, 
-                                x: object.width * keyframes[keyID-1].x, 
-                                y: object.height * keyframes[keyID-1].y, 
-                                startX: object.width * keyframes[keyID-1].x, 
-                                startY: object.height * keyframes[keyID-1].y
+                                x: originalSize.x * keyframes[keyID-1].x,
+                                y: originalSize.y * keyframes[keyID-1].y,
+                                startX: originalSize.x * keyframes[keyID-1].x,
+                                startY: originalSize.y * keyframes[keyID-1].y
                             };
                             var to = {
-                                x: object.width * keyframes[keyID].x, 
-                                y: object.height * keyframes[keyID].y
+                                x: originalSize.x * keyframes[keyID].x,
+                                y: originalSize.y * keyframes[keyID].y
                             }
                         }
                         else
@@ -435,13 +445,13 @@ function setup() {
 
     OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
-    //host = "localhost";
+    host = "localhost";
     //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //host = "10.0.0.111"; // MattC's PC
     //host = "10.0.0.101"; // Stu's PC 
-    host = "10.0.0.113"; // Stu's Linux VM
+    //host = "10.0.0.113"; // Stu's Linux VM
 
     /** 
      * Hack: 
@@ -576,7 +586,8 @@ function OpenAndLoadXMLFile(container, xmlFilePath) {
             var xml = jQuery.parseXML(doc)
             var root = xml.childNodes[0];
             LoadXMLData(container, root, container);
-            renderer.render(stage);
+            scaleToFit();
+            renderer.render(container);
             console.log("rendered");
             animate();
         }
