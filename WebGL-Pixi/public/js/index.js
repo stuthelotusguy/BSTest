@@ -561,6 +561,7 @@ function OnServerMessage(evt) {
     {
         activityIndicator.visible = true;
         if (Videotexture !== undefined) {
+            Videotexture.baseTexture.source.pause();
             Videotexture.destroy(true);
         }
         stage.removeChildren();
