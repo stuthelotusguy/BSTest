@@ -86,6 +86,8 @@ function LoadXMLData(container, node, topnode) {
 
             group.width = attr.sx.nodeValue;
             group.height = attr.sy.nodeValue;
+            group.RealScaleX = attr.sx.nodeValue;
+            group.RealScaleY = attr.sy.nodeValue;
             group.alpha = attr.t.nodeValue;
 
             container.sceneNodes[group.id] = group;
@@ -141,6 +143,9 @@ function LoadXMLData(container, node, topnode) {
 
             image.width = attr.w.nodeValue * attr.sx.nodeValue;
             image.height = attr.h.nodeValue * attr.sy.nodeValue;
+
+            image.RealScaleX = attr.sx.nodeValue;
+            image.RealScaleY = attr.sy.nodeValue;
 
             image.position.x = attr.x.nodeValue;
             image.position.y = attr.y.nodeValue;
@@ -298,8 +303,8 @@ function LoadXMLAnimationTracks(container, node, animation) {
                     for (var keyID = 1; keyID < keyframes.length; keyID++) {
                         if (fieldName == "scale" ) {
                             var originalSize = new PIXI.Point();
-                            originalSize.x = object.width/object.scale.x;
-                            originalSize.y = object.height/object.scale.y;
+                            originalSize.x = object.width/object.RealScaleX;
+                            originalSize.y = object.height / object.RealScaleY;
                             var from = {
                                 slave: object, 
                                 x: originalSize.x * keyframes[keyID-1].x,
@@ -441,17 +446,19 @@ function PlayAnimation(container, animationID) {
 }
 
 var host;
+var Videotexture;
+
 function setup() {
 
     OpenAndLoadXMLFile(activityIndicator, "views/ActivityIndicator.xml");
 
-    host = "localhost";
+    //host = "localhost";
     //host = "107.170.5.4"; // Digital Ocean "LabMediaServer" in New York
     //host = "37.139.6.121"; // Digital Ocean "LabMediaServer" in Amsterdam
     //host = "128.199.195.154"; // Digital Ocean "LabMediaServer" in Singapore
     //host = "10.0.0.111"; // MattC's PC
     //host = "10.0.0.101"; // Stu's PC 
-    //host = "10.0.0.113"; // Stu's Linux VM
+    host = "10.0.0.113"; // Stu's Linux VM
 
     /** 
      * Hack: 
@@ -553,6 +560,9 @@ function OnServerMessage(evt) {
     else if (evt.data.lastIndexOf("load:", 0) === 0)
     {
         activityIndicator.visible = true;
+        if (Videotexture !== undefined) {
+            Videotexture.destroy(true);
+        }
         stage.removeChildren();
         stage = null;
         stage = new PIXI.Container();
@@ -572,6 +582,19 @@ function OnServerMessage(evt) {
         {
             PlayAnimation(stage, evt.data.substring(5));
         }
+    }
+    else if (evt.data.lastIndexOf("pvid:", 0) === 0) {
+        // create a video texture from a path
+        //var texture = PIXI.Texture.fromVideo(evt.data.substring(5));
+        Videotexture = PIXI.Texture.fromVideo("https://download.blender.org/durian/trailer/sintel_trailer-720p.mp4");
+
+        // create a new Sprite using the video texture (yes it's that easy)
+        var videoSprite = new PIXI.Sprite(Videotexture);
+
+        videoSprite.width = renderer.width;
+        videoSprite.height = renderer.height;
+
+        stage.addChild(videoSprite);
     }
 }
 
