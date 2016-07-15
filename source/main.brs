@@ -3,6 +3,11 @@ sub Main()
     showChannelSGScreen()
 end sub
 
+function GetTimestamp() as String
+    ti = CreateObject ("roDateTime")
+    return left(ti.ToISOString(), 19) + "." + right("000" + ti.getMilliseconds().toStr(), 3) + "Z: "
+end function
+
 function TryToConnect() as Boolean
 
     ClearExistingScreens()
@@ -40,8 +45,9 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
-    m.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer"
-    'm.sendAddr.SetAddress("10.0.0.111:54322") ' MattC's PC
+    'm.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer"
+    m.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
+    'm.sendAddr.SetAddress("10.1.0.110:54322") ' MattC's PC
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
@@ -58,9 +64,9 @@ tryagain:
 
     Sleep(250)
 
-    byteSent = m.tcpClient.SendStr("start")
+    byteSent = m.tcpClient.SendStr("getnav")
     if (byteSent > 0)
-        print "TCP CLIENT - Sent start request to " m.sendAddr.GetAddress()
+        print "TCP CLIENT - Sent 'getnav' request to " m.sendAddr.GetAddress()
     else
         print "TCP CLIENT - No connection to " m.sendAddr.GetAddress()
         sleep(1000)
@@ -84,9 +90,11 @@ sub showChannelSGScreen()
 
     m.global = m.screen.getGlobalNode()
     m.global.id = "GlobalNode"
-    m.global.addFields( {key : "none"} )
-    m.global.addFields( {groups : 0, images : 0, solids : 0, text : 0, animations : 0, tracks : 0, keys : 0} )
+    m.global.addFields( {key : "none", keyEventCount : 0, firstPress : false} )
+    m.global.addFields( {groups : 0, images : 0, solids : 0, text : 0, animations : 0, tracks : 0, keys : 0 } )
     m.global.key = "none"
+    m.global.keyEventCount = 0
+    m.global.firstPress = false
 
     m.global.ObserveField("key","changetext")
     'm.global.setMessagePort(m.port)
@@ -99,18 +107,101 @@ sub showChannelSGScreen()
     While continue
         event = m.port.waitMessage(timeout)
         'event = m.port.GetMessage() ' get a message, if available
-
+        'print GetTimestamp() + " " + m.global.key
         if m.global.key <> "none"
-            key = m.global.key
-            m.global.key = "none"
+            key = invalid
+            if(m.global.keyEventCount > 0 and m.global.keyEventCount < 3) ' dont process the key for the next ~500ms after the first key press 
+                m.global.keyEventCount = m.global.keyEventCount + 1
+            else
+                key = m.global.key
+                if (m.global.keyEventCount = 0)
+                    m.global.keyEventCount = 1
+                end if
+            end if
             if(key <> invalid)  'Roku 1 crashed with this error. Not seen otherwise.
-                print "key is :" key
-                byteSent = m.tcpClient.SendStr(key)
-                if (byteSent > 0)
-                    print "TCP CLIENT - Sent key '" key "' to " m.sendAddr.GetAddress()
+                'print GetTimestamp() + "key is :" key
+                if(m.currentNavigation = invalid)
+                    m.currentNavigation = m.navigation[0]
+                    if(m.currentNavigation.FocusInAnim <> invalid)
+                        m.currentNavigation.FocusInAnim.control = "start"
+                    end if
                 else
-                    print "TCP CLIENT - No connection to " m.sendAddr.GetAddress() ". Switching screen locally."
-                    continue = TryToConnect()
+                    for each keymap in m.currentNavigation.keymap
+                        if keymap.key = key
+                        
+                            if (keymap.target <> invalid)
+                        
+                                if(m.currentNavigation.focusInAnim <> invalid)
+                                    m.currentNavigation.focusInAnim.control = "finish"
+                                end if
+                                if(m.currentNavigation.focusOutAnim <> invalid)
+                                    m.currentNavigation.focusOutAnim.control = "start"
+                                end if
+
+                                if (m.navListRoot <> invalid and key = "right")
+                                    if (m.global.keyEventCount >= 3)
+                                        if(m.currentNavigation.scrollLeftLinearAnim <> invalid and m.currentNavigation.scrollLeftLinearAnim.state = "stopped")
+                                            m.currentNavigation.scrollLeftLinearAnim.control = "start"
+                                        end if
+                                    else
+                                        if(m.currentNavigation.scrollLeftAnim <> invalid)
+                                            m.currentNavigation.scrollLeftAnim.control = "start"
+                                        end if
+                                    end if
+                                endif
+
+                                ' Switch navigation node
+                                m.currentNavigation = m.navigation[keymap.target]
+
+                                if (m.navListRoot <> invalid and key = "left")
+                                    if (m.global.keyEventCount >= 3)
+                                        if(m.currentNavigation.scrollRightLinearAnim <> invalid  and m.currentNavigation.scrollRightLinearAnim.state = "stopped")
+                                            m.currentNavigation.scrollRightLinearAnim.control = "start"
+                                        end if
+                                    else
+                                        if(m.currentNavigation.scrollRightAnim <> invalid)
+                                            m.currentNavigation.scrollRightAnim.control = "start"
+                                        end if
+                                    end if
+                                endif
+
+                                if(m.currentNavigation.focusInAnim <> invalid)
+                                    m.currentNavigation.focusInAnim.control = "start"
+                                end if
+                            end if
+                            
+                            ' MattC Hack: crappy snappy page scroll
+                            'if (m.navListRoot <> invalid)
+                            '    if(key = "right")
+                            '        m.countX = m.countX + 1
+                            '        if (m.countX MOD 6 = 0)
+                            '            m.navListRoot.translation = [m.navListRoot.translation[0] - 1080, m.navListRoot.translation[1]]
+                            '        end if
+                            '    else if(key = "left")
+                            '        if (m.countX MOD 6 = 0)
+                            '            m.navListRoot.translation = [m.navListRoot.translation[0] + 1080, m.navListRoot.translation[1]]
+                            '        end if
+                            '        m.countX = m.countX - 1
+                            '    end if
+                            'end if
+                            
+                            
+                            goto keymapLoopBreak
+                        end if
+                    end for
+keymapLoopBreak:
+                    if(m.global.firstPress)
+                        byteSent = m.tcpClient.SendStr(key)
+                        m.global.firstPress = false
+                        if (byteSent > 0)
+                            print GetTimestamp() + "TCP CLIENT - Sent key '" key "' to " m.sendAddr.GetAddress()
+                        else
+                            print GetTimestamp() + "TCP CLIENT - No connection to " m.sendAddr.GetAddress() ". Switching screen locally."
+                            if (key = "ok" or key = "back")
+                                continue = TryToConnect()
+                            end if
+                        end if
+                    end if
                 end if
             end if
         end if
@@ -124,11 +215,11 @@ sub showChannelSGScreen()
                 closed = False
                 if m.tcpClient.isReadable()
                     m.tcpClientRecvbuffer = CreateObject("roByteArray")
-                    m.tcpClientRecvbuffer[65536] = 0 ' 64KB
-                    received = m.tcpClient.receive(m.tcpClientRecvbuffer, 0, 65536)
+                    m.tcpClientRecvbuffer[256] = 0
+                    received = m.tcpClient.receive(m.tcpClientRecvbuffer, 0, 256)
                     if (received > 0)
-                        print "TCP CLIENT - received " m.sendAddr.getAddress() " : " m.tcpClientRecvbuffer.ToAsciiString()
-                        LoadPackage(m.tcpClientRecvbuffer.ToAsciiString())
+                        print "TCP CLIENT - received " received.toStr() + " bytes from " + m.sendAddr.getAddress()
+                        ProcessCommand(m.tcpClientRecvbuffer.ToAsciiString())
                     else
                         closed = true
                     end if
@@ -157,7 +248,7 @@ sub showChannelSGScreen()
                     if connection.isReadable()
                         received = connection.receive(m.buffer, m.bufferSize, 65536)
                         print "received chunk :" received
-                        m.bufferSize += received
+                        m.bufferSize = m.bufferSize + received
                         if received = 0 'client closed
                             closed = true
                         end if
@@ -168,7 +259,12 @@ sub showChannelSGScreen()
                         m.connections.delete(Stri(changeID))
                         if (m.bufferSize > 0)
                             print "total byte received : " m.bufferSize
-                            ParseData()
+                            if (m.buffer[0] = 123) ' 123 is the '{' char
+                                ParseJSON()
+                            else
+                                ParseBRSXML()
+                            endif
+                            m.bufferSize = 0 ' we consumed the m.buffer
                         end if
                     end if
                 end if
@@ -204,7 +300,7 @@ sub ClearExistingScreens()
     m.scene.getChild(1).visible = 1
 end sub
 
-sub LoadPackage(command as String)
+sub ProcessCommand(command as String)
 
     m.video = invalid
 
@@ -230,21 +326,87 @@ sub LoadPackage(command as String)
 
         content.AppendChild(m.lib)
 
+        if (name="Lander.pkg")
+            ' MattC Hack: cache all of the navigation animation nodes for the screen.
+            print GetTimestamp() + "Caching Lander.pkg Animation started..."
+            for each nav in m.navigation
+                anim = content.findNode(nav.focusIn)
+                if(anim = invalid)
+                    'print "animation " + nav.focusIn + " was not found."
+                else
+                    nav.focusInAnim = anim
+                end if
+                
+                anim = content.findNode(nav.focusOut)
+                if(anim = invalid)
+                    'print "animation " + nav.focusOut + " was not found."
+                else
+                    nav.focusOutAnim = anim
+                end if
+                
+                anim = content.findNode(nav.scrollLeft)
+                if(anim = invalid)
+                    'print "animation " + nav.scrollLeft + " was not found."
+                else
+                    nav.scrollLeftAnim = anim
+                end if
+                
+                anim = content.findNode(nav.scrollRight)
+                if(anim = invalid)
+                    'print "animation " + nav.scrollRight + " was not found."
+                else
+                    nav.scrollRightAnim = anim
+                end if
+                
+                anim = content.findNode(nav.scrollLeftLinear)
+                if(anim = invalid)
+                    'print "animation " + nav.scrollLeftLinear + " was not found."
+                else
+                    nav.scrollLeftLinearAnim = anim
+                end if
+                
+                anim = content.findNode(nav.scrollRightLinear)
+                if(anim = invalid)
+                    'print "animation " + nav.scrollRightLinear + " was not found."
+                else
+                    nav.scrollRightLinearAnim = anim
+                end if
+                
+            end for
+            print GetTimestamp() + "Caching Lander.pkg Animation ended."
+            
+            ' MattC Hack: cache the list root for
+            m.navListRoot = content.findNode("ListRoot_8")
+            m.countX = 1 ' we start at 1 because the large BigBuckBunny is 2 posters wide.
+        else
+            for each nav in m.navigation
+                nav.focusInAnim = invalid
+                nav.focusOutAnim = invalid
+            end for
+            m.navListRoot = invalid
+            m.currentNavigation = invalid
+        end if
+        
         m.scene.AppendChild(content)
 
         content.focusable = true
         content.setFocus(true)
+        
     else if com = "play"
-        print "playing '" + name + "'"
-        anim =m.scene.findNode(name) 
-        'stop
-        if(anim <> invalid)
-            anim.control = "start"
-            dur = 100 + anim.duration * 1000
-            'print dur
-            'Sleep(dur * 3)
+        if(left(name, 5) = "Focus")
+            print "Ignoring '" + command + "' command"
         else
-            print "Not found"
+            print "playing '" + name + "'"
+            anim = m.scene.findNode(name) 
+            'stop
+            if(anim <> invalid)
+                anim.control = "start"
+                dur = 100 + anim.duration * 1000
+                'print dur
+                'Sleep(dur * 3)
+            else
+                print "Not found"
+            end if
         end if
     else if com = "pvid"
         print "playing video: " name
@@ -257,17 +419,32 @@ sub LoadPackage(command as String)
         m.video.setMessagePort(m.port)
         m.video.SetContent(videoclip)
         m.video.show()
-       
+        
     end if
     
     if m.tcpClient <> invalid
+        print GetTimestamp() + "Sending ACK"
         m.tcpClient.SendStr("ACK")
     end if
 
 end sub
 
+sub ParseJSON()
+    json = ParseJSON(m.buffer.ToAsciiString())
+    if (json <> invalid)
+        if(json.nav <> invalid)
+            print "Navigation data parsed."
+            m.navigation = json.nav
+            m.tcpClient.SendStr("start") ' HACK MattC
+        else
+            print "Unknown json data"
+        end if
+    else
+        print "Invalid json format."
+    end if
+end sub
   
-sub ParseData()
+sub ParseBRSXML()
 
     ClearExistingScreens()
     wait_connect = m.scene.findNode("wait_connect")
@@ -283,7 +460,7 @@ sub ParseData()
         content = createObject("RoSGNode","Poster")
         content.id = "Youi"
         content.focusable = true
-        print("getContent: scene found")
+        print "getContent: scene found"
         body = contentxml.GetBody()
         etype = lcase(type(body))
         if etype = "roxmllist"
@@ -339,7 +516,6 @@ sub ParseData()
     endTime = CreateObject("roDateTime")
     totalTime = endTime.AsSeconds() - startTime.AsSeconds()
     print "Total time (in second):" totalTime
-    m.bufferSize = 0 ' we consumed the m.buffer
 end sub
 
 sub CreateSG(xml as Object, node as Object)
@@ -348,7 +524,7 @@ sub CreateSG(xml as Object, node as Object)
     for each elem in xml
         elemname = elem.GetName()
         if(elemname="g")
-            m.global.groups ++
+            m.global.groups = m.global.groups + 1
             attributes = elem.getAttributes()
             'if(left(attributes.id, 8) = "ListRoot")
             '    print "Found list node!"
@@ -370,8 +546,8 @@ sub CreateSG(xml as Object, node as Object)
             'item.visible = Val(attributes.v)
             PrintoutOfItem(item)
         else if(elemname="i")
-            m.global.images ++
-            namenum += 1
+            m.global.images = m.global.images + 1
+            namenum = namenum + 1
             attributes = elem.getAttributes()
             item = node.createChild("Poster")
             item.rotation = attributes.rz
@@ -421,7 +597,7 @@ sub CreateSG(xml as Object, node as Object)
             end if
             PrintoutOfItem(item)
         else if(elemname="s")
-            m.global.solids ++
+            m.global.solids = m.global.solids + 1
             attributes = elem.getAttributes()
             item = node.createChild("Rectangle")
             item.color = attributes.c
@@ -436,7 +612,7 @@ sub CreateSG(xml as Object, node as Object)
             'item.visible = Val(attributes.v)
             PrintoutOfItem(item)
         else if(elemname="t")
-            m.global.text ++
+            m.global.text = m.global.text + 1
             attributes = elem.getAttributes()
             item = node.createChild("Label")
             item.color = attributes.c
@@ -479,7 +655,7 @@ sub CreateSG(xml as Object, node as Object)
             item.lineSpacing = -1
             PrintoutOfItem(item)
         else if(elemname="a")
-            m.global.animations ++
+            m.global.animations = m.global.animations + 1
             'goto nextIteration ' skipping animations for now due to EXTREMELY SLOW paring delays
             attributes = elem.getAttributes()
             item = node.createChild("Animation")
@@ -489,7 +665,7 @@ sub CreateSG(xml as Object, node as Object)
             item.easeFunction = "linear"
             PrintoutOfItem(item)
         else if(elemname="at")
-            m.global.tracks ++
+            m.global.tracks = m.global.tracks + 1
             attributes = elem.getAttributes()
             if (attributes.t = "1")
                 item = node.createChild("FloatFieldInterpolator")
@@ -502,7 +678,7 @@ sub CreateSG(xml as Object, node as Object)
             item.fieldToInterp = attributes.f
             PrintoutOfItem(item)
         else if(elemname="k")
-            m.global.keys ++
+            m.global.keys = m.global.keys + 1
             'goto nextIteration ' skipping animations for now due to EXTREMELY SLOW paring delays
             attributes = elem.getAttributes()
 
