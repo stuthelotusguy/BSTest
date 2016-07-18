@@ -179,16 +179,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_9" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[0.332719,0],[-360.335,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[0.332719,0],[-360.335,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_9" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-360.335,0],[0.332719,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-360.335,0],[0.332719,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_9" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[0.332719,0],[-360.335,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_9" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[0.332719,0],[-360.335,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_9" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-360.335,0],[0.332719,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_9" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-360.335,0],[0.332719,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_22" translation="[361.333, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -348,16 +348,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_22" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_22" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_22" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_22" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_22" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_22" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_35" translation="[361.333, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -517,16 +517,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_35" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_35" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_35" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_35" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-361.333,0],[-542,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_35" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_35" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-361.333,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_48" translation="[542, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -686,16 +686,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_48" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_48" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_48" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_48" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_48" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_48" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_61" translation="[542, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -855,16 +855,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_61" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_61" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_61" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_61" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-542,0],[-722.667,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_61" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_61" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-542,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_74" translation="[722.667, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1024,16 +1024,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_74" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_74" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_74" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_74" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_74" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_74" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_87" translation="[722.667, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1193,16 +1193,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_87" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_87" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_87" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_87" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-722.667,0],[-903.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_87" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_87" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-722.667,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_100" translation="[903.333, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1362,16 +1362,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_100" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_100" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_100" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_100" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_100" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_100" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_113" translation="[903.333, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1531,16 +1531,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_113" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_113" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_113" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_113" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-903.333,0],[-1084,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_113" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_113" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-903.333,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_126" translation="[1084, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1700,16 +1700,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_126" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_126" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_126" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_126" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_126" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_126" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_139" translation="[1084, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -1869,16 +1869,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_139" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_139" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_139" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_139" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1084,0],[-1264.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_139" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_139" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1084,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_152" translation="[1264.67, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2038,16 +2038,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_152" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_152" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_152" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_152" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_152" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_152" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_165" translation="[1264.67, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2207,16 +2207,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_165" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_165" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_165" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_165" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1264.67,0],[-1445.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_165" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_165" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1264.67,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_178" translation="[1445.33, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2376,16 +2376,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_178" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_178" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_178" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_178" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_178" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_178" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_191" translation="[1445.33, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2545,16 +2545,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_191" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_191" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_191" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_191" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1445.33,0],[-1626,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_191" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_191" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1445.33,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_204" translation="[1626, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2714,16 +2714,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_204" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_204" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_204" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_204" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_204" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_204" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_217" translation="[1626, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -2883,16 +2883,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_217" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_217" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_217" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_217" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1626,0],[-1806.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_217" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_217" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1626,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_230" translation="[1806.67, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -3052,16 +3052,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_230" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_230" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_230" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_230" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_230" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_230" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_243" translation="[1806.67, 256]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -3221,16 +3221,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_243" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_243" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_243" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_243" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1806.67,0],[-1987.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_243" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_243" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-1806.67,0]]" />
 					</Animation>
 				</Group>
 				<Group id="unknown_256" translation="[1987.33, 0]" scaleRotateCenter="[90.3333, 128]" scale="[1, 1]" rotation="0" opacity="1" visible="1">
@@ -3390,16 +3390,16 @@
 							/>
 					</Animation>
 					<Animation id="ScrollLeft_unknown_256" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-2168,0]]"  easeFunction="inOutQuad"/>
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-2168,0]]"/>
 					</Animation>
 					<Animation id="ScrollRight_unknown_256" duration="0.5" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-2168,0],[-1987.33,0]]" easeFunction="inOutQuad" />
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-2168,0],[-1987.33,0]]"/>
 					</Animation>
-					<Animation id="ScrollLeftLinear_unknown_256" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-2168,0]]"  easeFunction="linear"/>
+					<Animation id="ScrollLeftLinear_unknown_256" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-1987.33,0],[-2168,0]]"/>
 					</Animation>
-					<Animation id="ScrollRightLinear_unknown_256" duration="0.333" repeat="0">
-						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-2168,0],[-1987.33,0]]" easeFunction="linear" />
+					<Animation id="ScrollRightLinear_unknown_256" duration="0.21" repeat="0" easeFunction="linear">
+						<Vector2DFieldInterpolator fieldToInterp="ListRoot_8.translation" key="[0, 1]" keyvalue="[[-2168,0],[-1987.33,0]]" />
 					</Animation>
 				</Group>
 			</Group>
