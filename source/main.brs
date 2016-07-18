@@ -21,7 +21,7 @@ tryagain:
         m.buffer = invalid
     end if
     m.buffer = CreateObject("roByteArray")
-    m.buffer[524288] = 0 ' 512KB
+    m.buffer[65536] = 0 ' 64KB
     m.bufferSize = 0
     if(m.tcpServer <> invalid)
         m.tcpServer.close()
@@ -45,8 +45,8 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
-    'm.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer"
-    m.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
+    m.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer" (New York)
+    'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
     'm.sendAddr.SetAddress("10.1.0.110:54322") ' MattC's PC
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
@@ -214,12 +214,21 @@ keymapLoopBreak:
             if changeID = m.tcpClient.getID()
                 closed = False
                 if m.tcpClient.isReadable()
-                    m.tcpClientRecvbuffer = CreateObject("roByteArray")
-                    m.tcpClientRecvbuffer[256] = 0
-                    received = m.tcpClient.receive(m.tcpClientRecvbuffer, 0, 256)
+                    received = m.tcpClient.receive(m.buffer, m.bufferSize, 65536)
                     if (received > 0)
                         print "TCP CLIENT - received " received.toStr() + " bytes from " + m.sendAddr.getAddress()
-                        ProcessCommand(m.tcpClientRecvbuffer.ToAsciiString())
+                        m.bufferSize = m.bufferSize + received
+
+                        if m.bufferSize > 0 and m.buffer[m.bufferSize-1] = 0 ' MattC Hack: we use the null char delimits the 'end of transmission' 
+                            if (m.buffer[0] = 123) ' 123 is the '{' char, which is a JSON object
+                                ParseBRSJSON()
+                            else if (m.buffer[0] = 60) ' 60 os the '<' char, which is an XML object
+                                ParseBRSXML()
+                            else
+                                ProcessCommand(m.buffer.ToAsciiString())
+                            end if
+                            m.bufferSize = 0 ' we consumed the m.buffer
+                        end if
                     else
                         closed = true
                     end if
@@ -260,7 +269,7 @@ keymapLoopBreak:
                         if (m.bufferSize > 0)
                             print "total byte received : " m.bufferSize
                             if (m.buffer[0] = 123) ' 123 is the '{' char
-                                ParseJSON()
+                                ParseBRSJSON()
                             else
                                 ParseBRSXML()
                             endif
@@ -321,6 +330,7 @@ sub ProcessCommand(command as String)
         while m.lib.loadStatus = "loading"
             print m.lib.loadStatus '+" " + m.lib.uri
         end while
+            print m.lib.loadStatus
 
         content = CreateObject("roSGNode", "MainScreen")
 
@@ -429,7 +439,7 @@ sub ProcessCommand(command as String)
 
 end sub
 
-sub ParseJSON()
+sub ParseBRSJSON()
     json = ParseJSON(m.buffer.ToAsciiString())
     if (json <> invalid)
         if(json.nav <> invalid)
