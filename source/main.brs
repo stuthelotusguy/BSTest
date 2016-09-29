@@ -64,9 +64,10 @@ tryagain:
 
     Sleep(250)
 
-    byteSent = m.tcpClient.SendStr("getnav")
+    byteSent = m.tcpClient.SendStr("start")
     if (byteSent > 0)
-        print "TCP CLIENT - Sent 'getnav' request to " m.sendAddr.GetAddress()
+        print "TCP CLIENT - Sent 'start' request to " m.sendAddr.GetAddress()
+    
     else
         print "TCP CLIENT - No connection to " m.sendAddr.GetAddress()
         sleep(1000)
@@ -120,86 +121,15 @@ sub showChannelSGScreen()
             end if
             if(key <> invalid)  'Roku 1 crashed with this error. Not seen otherwise.
                 'print GetTimestamp() + "key is :" key
-                if(m.currentNavigation = invalid)
-                    m.currentNavigation = m.navigation[0]
-                    if(m.currentNavigation.FocusInAnim <> invalid)
-                        m.currentNavigation.FocusInAnim.control = "start"
-                    end if
-                else
-                    for each keymap in m.currentNavigation.keymap
-                        if keymap.key = key
-                        
-                            if (keymap.target <> invalid)
-                        
-                                if(m.currentNavigation.focusInAnim <> invalid)
-                                    m.currentNavigation.focusInAnim.control = "finish"
-                                end if
-                                if(m.currentNavigation.focusOutAnim <> invalid)
-                                    m.currentNavigation.focusOutAnim.control = "start"
-                                end if
-
-                                if (m.navListRoot <> invalid and key = "right")
-                                    if (m.global.keyEventCount >= 3)
-                                        if(m.currentNavigation.scrollLeftLinearAnim <> invalid and m.currentNavigation.scrollLeftLinearAnim.state = "stopped")
-                                            m.currentNavigation.scrollLeftLinearAnim.control = "start"
-                                        end if
-                                    else
-                                        if(m.currentNavigation.scrollLeftAnim <> invalid)
-                                            m.currentNavigation.scrollLeftAnim.control = "start"
-                                        end if
-                                    end if
-                                endif
-
-                                ' Switch navigation node
-                                m.currentNavigation = m.navigation[keymap.target]
-
-                                if (m.navListRoot <> invalid and key = "left")
-                                    if (m.global.keyEventCount >= 3)
-                                        if(m.currentNavigation.scrollRightLinearAnim <> invalid  and m.currentNavigation.scrollRightLinearAnim.state = "stopped")
-                                            m.currentNavigation.scrollRightLinearAnim.control = "start"
-                                        end if
-                                    else
-                                        if(m.currentNavigation.scrollRightAnim <> invalid)
-                                            m.currentNavigation.scrollRightAnim.control = "start"
-                                        end if
-                                    end if
-                                endif
-
-                                if(m.currentNavigation.focusInAnim <> invalid)
-                                    m.currentNavigation.focusInAnim.control = "start"
-                                end if
-                            end if
-                            
-                            ' MattC Hack: crappy snappy page scroll
-                            'if (m.navListRoot <> invalid)
-                            '    if(key = "right")
-                            '        m.countX = m.countX + 1
-                            '        if (m.countX MOD 6 = 0)
-                            '            m.navListRoot.translation = [m.navListRoot.translation[0] - 1080, m.navListRoot.translation[1]]
-                            '        end if
-                            '    else if(key = "left")
-                            '        if (m.countX MOD 6 = 0)
-                            '            m.navListRoot.translation = [m.navListRoot.translation[0] + 1080, m.navListRoot.translation[1]]
-                            '        end if
-                            '        m.countX = m.countX - 1
-                            '    end if
-                            'end if
-                            
-                            
-                            goto keymapLoopBreak
-                        end if
-                    end for
-keymapLoopBreak:
-                    if(m.global.firstPress)
-                        byteSent = m.tcpClient.SendStr(key)
-                        m.global.firstPress = false
-                        if (byteSent > 0)
-                            print GetTimestamp() + "TCP CLIENT - Sent key '" key "' to " m.sendAddr.GetAddress()
-                        else
-                            print GetTimestamp() + "TCP CLIENT - No connection to " m.sendAddr.GetAddress() ". Switching screen locally."
-                            if (key = "ok" or key = "back")
-                                continue = TryToConnect()
-                            end if
+                if(m.global.firstPress)
+                    byteSent = m.tcpClient.SendStr(key)
+                    m.global.firstPress = false
+                    if (byteSent > 0)
+                        print GetTimestamp() + "TCP CLIENT - Sent key '" key "' to " m.sendAddr.GetAddress()
+                    else
+                        print GetTimestamp() + "TCP CLIENT - No connection to " m.sendAddr.GetAddress() ". Switching screen locally."
+                        if (key = "ok" or key = "back")
+                            continue = TryToConnect()
                         end if
                     end if
                 end if
@@ -323,8 +253,8 @@ sub ProcessCommand(command as String)
         m.lib.id="BSTestLib"
         if left(name, 4) = "file"
             m.lib.uri=name
-'        else if name = "Lander.pkg"
-'            m.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
+        else if name = "Lander.pkg"
+            m.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
         else
             m.lib.uri="https://labmediaserver.crabdance.com/images/" + name
         end if
@@ -338,67 +268,6 @@ sub ProcessCommand(command as String)
 
         content.AppendChild(m.lib)
 
-        if (name="Lander.pkg")
-            ' MattC Hack: cache all of the navigation animation nodes for the screen.
-            print GetTimestamp() + "Caching Lander.pkg Animation started..."
-            for each nav in m.navigation
-                anim = content.findNode(nav.focusIn)
-                if(anim = invalid)
-                    'print "animation " + nav.focusIn + " was not found."
-                else
-                    nav.focusInAnim = anim
-                end if
-                
-                anim = content.findNode(nav.focusOut)
-                if(anim = invalid)
-                    'print "animation " + nav.focusOut + " was not found."
-                else
-                    nav.focusOutAnim = anim
-                end if
-                
-                anim = content.findNode(nav.scrollLeft)
-                if(anim = invalid)
-                    'print "animation " + nav.scrollLeft + " was not found."
-                else
-                    nav.scrollLeftAnim = anim
-                end if
-                
-                anim = content.findNode(nav.scrollRight)
-                if(anim = invalid)
-                    'print "animation " + nav.scrollRight + " was not found."
-                else
-                    nav.scrollRightAnim = anim
-                end if
-                
-                anim = content.findNode(nav.scrollLeftLinear)
-                if(anim = invalid)
-                    'print "animation " + nav.scrollLeftLinear + " was not found."
-                else
-                    nav.scrollLeftLinearAnim = anim
-                end if
-                
-                anim = content.findNode(nav.scrollRightLinear)
-                if(anim = invalid)
-                    'print "animation " + nav.scrollRightLinear + " was not found."
-                else
-                    nav.scrollRightLinearAnim = anim
-                end if
-                
-            end for
-            print GetTimestamp() + "Caching Lander.pkg Animation ended."
-            
-            ' MattC Hack: cache the list root for
-            m.navListRoot = content.findNode("ListRoot_8")
-            m.countX = 1 ' we start at 1 because the large BigBuckBunny is 2 posters wide.
-        else
-            for each nav in m.navigation
-                nav.focusInAnim = invalid
-                nav.focusOutAnim = invalid
-            end for
-            m.navListRoot = invalid
-            m.currentNavigation = invalid
-        end if
-        
         m.scene.AppendChild(content)
 
         content.focusable = true
@@ -444,13 +313,7 @@ end sub
 sub ParseBRSJSON()
     json = ParseJSON(m.buffer.ToAsciiString())
     if (json <> invalid)
-        if(json.nav <> invalid)
-            print "Navigation data parsed."
-            m.navigation = json.nav
-            m.tcpClient.SendStr("start") ' HACK MattC
-        else
-            print "Unknown json data"
-        end if
+        ' TODO
     else
         print "Invalid json format."
     end if
