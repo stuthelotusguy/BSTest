@@ -45,9 +45,9 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
-    m.sendAddr.SetAddress("107.170.5.4:54322") ' Digital Ocean "LabMediaServer" (New York)
+    m.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
     'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
-    'm.sendAddr.SetAddress("10.1.0.110:54322") ' MattC's PC
+    'm.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
@@ -323,8 +323,10 @@ sub ProcessCommand(command as String)
         m.lib.id="BSTestLib"
         if left(name, 4) = "file"
             m.lib.uri=name
+'        else if name = "Lander.pkg"
+'            m.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
         else
-            m.lib.uri="http://107.170.5.4/images/" + name
+            m.lib.uri="https://labmediaserver.crabdance.com/images/" + name
         end if
         print m.lib.loadStatus +" " + m.lib.uri
         while m.lib.loadStatus = "loading"
@@ -577,12 +579,12 @@ sub CreateSG(xml as Object, node as Object)
                 if lname <> "http"
                     'BrS issue: Images do not seem to work from local files which means they must be hosted.'
                     'newuri = "pkg:/assets/drawable/default/" + attributes.url
-                    newuri = "http://107.170.5.4/images/" + attributes.url
+                    newuri = "https://labmediaserver.crabdance.com/images/" + attributes.url
                     item.uri = newuri
                 end if
             else
                 'item.uri = "pkg:/assets/drawable/default/Placeholder16x9.png"
-                item.uri = "http://107.170.5.4/images/Placeholder16x9.png"
+                item.uri = "https://labmediaserver.crabdance.com/images/Placeholder16x9.png"
             End if
             if(attributes.id <> invalid)
                 item.id = attributes.id
@@ -632,7 +634,7 @@ sub CreateSG(xml as Object, node as Object)
 
             'BrS issue: Fonts do not seem to work from a url which means they must be part of the pkg.'
             font.uri = "pkg:/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
-            'font.uri = "http://107.170.5.4/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
+            'font.uri = "https://labmediaserver.crabdance.com/fonts/yi_" + attributes.ff + "-" + attributes.fs + ".ttf"
             'print font.uri
 
             fontsize = Val(attributes.fz)
