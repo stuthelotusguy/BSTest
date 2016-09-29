@@ -239,6 +239,11 @@ sub ClearExistingScreens()
     m.scene.getChild(1).visible = 1
 end sub
 
+sub AddStusAmazingTestScreen()
+    CurrentTest = CreateObject("RoSGNode", "Lander")
+    m.scene.appendChild(CurrentTest)
+end sub
+
 sub ProcessCommand(command as String)
 
     m.video = invalid
@@ -249,12 +254,16 @@ sub ProcessCommand(command as String)
         ClearExistingScreens()
         print "creating scene"
 
+      if(true)
+            AddStusAmazingTestScreen()
+      else
+
         m.lib = createObject("RoSGNode","ComponentLibrary")
         m.lib.id="BSTestLib"
         if left(name, 4) = "file"
             m.lib.uri=name
         else if name = "Lander.pkg"
-            m.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
+            'm.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
         else
             m.lib.uri="https://labmediaserver.crabdance.com/images/" + name
         end if
@@ -272,6 +281,8 @@ sub ProcessCommand(command as String)
 
         content.focusable = true
         content.setFocus(true)
+
+      end if
         
     else if com = "play"
         if(left(name, 5) = "Focus")
