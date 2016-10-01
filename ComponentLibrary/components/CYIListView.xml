@@ -20,7 +20,15 @@
         m.top.rowLabelColor="0xa0b033ff"
         m.top.visible = true
         m.top.SetFocus(true)
-        m.top.ObserveField("rowItemFocused", "onRowItemFocused")
+        m.top.observeField("rowItemSelected", "onRowItemSelected")
+        m.top.observeField("rowItemFocused", "onRowItemFocused")
+    end function
+
+    function onRowItemSelected() as void
+        row = m.top.rowItemSelected[0]
+        col = m.top.rowItemSelected[1]
+        print "Row Selected: " + stri(row)
+        print "Col Selected: " + stri(col)
     end function
 
     function onRowItemFocused() as void

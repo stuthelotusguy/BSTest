@@ -5,6 +5,7 @@
 <interface> 
   <field id="labelText" type="string" />
   <field id="posterUrl" type="string" />
+  <field id="remoteIndex" type="int" />
 </interface>
 
 </component>

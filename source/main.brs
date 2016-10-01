@@ -45,9 +45,9 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
-    m.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
+    'm.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
     'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
-    'm.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC
+    m.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
@@ -92,15 +92,13 @@ sub showChannelSGScreen()
     m.global = m.screen.getGlobalNode()
     m.global.id = "GlobalNode"
     m.global.addFields( {key : "none", keyEventCount : 0, firstPress : false} )
-    m.global.addFields( {groups : 0, images : 0, solids : 0, text : 0, animations : 0, tracks : 0, keys : 0 } )
+    m.global.addFields( {groups : 0, images : 0, solids : 0, text : 0, animations : 0, tracks : 0, keys : 0, remoteIndex : -1 } )
     m.global.key = "none"
     m.global.keyEventCount = 0
     m.global.firstPress = false
 
-    m.global.ObserveField("key","changetext")
-    'm.global.setMessagePort(m.port)
-    'm.global.control = "start"
-
+    m.global.ObserveField("remoteIndex", m.port)
+    
     timeout = 16 ' in milliseconds
 
     continue = TryToConnect()
@@ -216,6 +214,19 @@ sub showChannelSGScreen()
                     m.tcpClient.SendStr("back")
                 end if
             end if
+        else if type(event) = "roSGNodeEvent"
+            if event.getNode() = "GlobalNode"
+                if event.getField() = "remoteIndex"
+                    if m.tcpClient <> invalid
+                        m.tcpClient.SendStr("selected:" + m.global.remoteIndex.ToStr())
+                        ' MATTC Reset remoteIndex so the same movie can be
+                        ' selected again at a later time. 
+                        m.global.unobserveField("remoteIndex")
+                        m.global.remoteIndex = -1
+                        m.global.observeField("remoteIndex", m.port)
+                    end if
+                end if
+            end if
         end if
     end while
 
@@ -236,7 +247,7 @@ sub ClearExistingScreens()
             count = m.scene.getChildCount()
         end while
     end if
-    m.scene.getChild(1).visible = 1
+    m.scene.getChild(1).visible = 1 ' make our wait_connect visible
 end sub
 
 sub AddStusAmazingTestScreen()
@@ -254,7 +265,7 @@ sub ProcessCommand(command as String)
         ClearExistingScreens()
         print "creating scene"
 
-      if(true)
+      if(false)
             AddStusAmazingTestScreen()
       else
 
@@ -262,7 +273,7 @@ sub ProcessCommand(command as String)
         m.lib.id="BSTestLib"
         if left(name, 4) = "file"
             m.lib.uri=name
-        else if name = "Lander.pkg"
+        'else if name = "Lander.pkg"
             'm.lib.uri="https://labmediaserver.crabdance.com/images/Lander_unsigned.zip" ' MATTC ultimate test!
         else
             m.lib.uri="https://labmediaserver.crabdance.com/images/" + name
@@ -283,6 +294,9 @@ sub ProcessCommand(command as String)
         content.setFocus(true)
 
       end if
+    else if com = "clrs" 'clear screens
+    
+        ClearExistingScreens()
         
     else if com = "play"
         if(left(name, 5) = "Focus")
@@ -302,15 +316,25 @@ sub ProcessCommand(command as String)
         end if
     else if com = "pvid"
         print "playing video: " name
-        videoclip = CreateObject("roAssociativeArray")
-        videoclip.StreamBitrates = [0]
-        videoclip.StreamUrls = name
-        videoclip.StreamQualities = ["HD"]
-        videoclip.StreamFormat = "hls"
-        m.video = CreateObject("roVideoScreen")
-        m.video.setMessagePort(m.port)
-        m.video.SetContent(videoclip)
-        m.video.show()
+        'videoclip = CreateObject("roAssociativeArray")
+        'videoclip.StreamBitrates = [0]
+        'videoclip.StreamUrls = name
+        'videoclip.StreamQualities = ["HD"]
+        'videoclip.StreamFormat = "hls"
+        'm.video = CreateObject("roVideoScreen")
+        'm.video.setMessagePort(m.port)
+        'm.video.SetContent(videoclip)
+        'm.video.show()
+        videoSurfaceView = m.scene.findNode("Video_Surface_View_3")
+        if videoSurfaceView <> invalid
+            videoContent = createObject("RoSGNode", "ContentNode")
+            videoContent.url = name
+            'videoContent.streamformat = "hls"
+            videoContent.streamformat = "mp4"  'MATTC Todo
+            
+            videoSurfaceView.content = videoContent
+            videoSurfaceView.control = "play"
+        end if
         
     end if
     
