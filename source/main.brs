@@ -45,9 +45,10 @@ tryagain:
     continue = m.tcpServer.eOK()
     
     m.sendAddr = createobject("roSocketAddress")
-    'm.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
+    m.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
     'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
-    m.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC
+    'm.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC on Lan
+    'm.sendAddr.SetAddress("10.1.0.118:54322") ' MattC's PC on Stu's wifi router
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
     m.tcpClient =  CreateObject("roStreamSocket")
     m.tcpClient.setMessagePort(m.port) 'notifications for tcp come to msgPort
