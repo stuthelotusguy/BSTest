@@ -88,6 +88,8 @@ sub showChannelSGScreen()
     m.screen.setMessagePort(m.port)
 
     m.scene = m.screen.CreateScene("Roku_Youi_Scene")
+    m.scene.backgroundColor="0xFFFFFFFF"
+    m.scene.backgroundUri = ""
     m.screen.show()
 
     m.global = m.screen.getGlobalNode()
