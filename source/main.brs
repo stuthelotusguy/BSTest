@@ -26,11 +26,6 @@ function TryToConnect() as Boolean
         end if
     end while
 
-    wait_connect = m.scene.findNode("wait_connect")
-    if wait_connect <> invalid
-        wait_connect.visible = 0
-    end if
-
     return continue
 end function
 
@@ -174,6 +169,11 @@ sub ProcessCommand(command as String)
 
         content.focusable = true
         content.setFocus(true)
+        
+        wait_connect = m.scene.findNode("wait_connect")
+        if wait_connect <> invalid
+            wait_connect.visible = 0
+        end if
 
     else if com = "clrs" 'clear screens
     
