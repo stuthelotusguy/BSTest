@@ -19,7 +19,7 @@ end sub
 
 <children>
 	<Group id="activity_indicator" translation="[0, 0]" scaleRotateCenter="[0, 0]" scale="[1, 1]" rotation="0" opacity="1">
-		<Poster id="Activation_BG_png_3" translation="[-320, -180]" scaleRotateCenter="[960, 540]" scale="[0.75, 0.75]" rotation="0" opacity="1" width="1920" height="1080" uri="http://107.170.5.4/images/Activation-BG.png"/>
+		<Poster id="Activation_BG_png_3" translation="[-320, -180]" scaleRotateCenter="[960, 540]" scale="[0.75, 0.75]" rotation="0" opacity="1" width="1920" height="1080" uri="http://labmediaserver.crabdance.com/images/Activation-BG.png"/>
 		<Group id="Spinner_4" translation="[0, 0]" scaleRotateCenter="[640, 360]" scale="[1, 1]" rotation="0" opacity="1">
 			<Rectangle id="Track_5" translation="[490, 543]" scaleRotateCenter="[150, 5]" scale="[1, 1]" rotation="0" opacity="0.1" width="300" height="10" color="0xF1F1F1FF"/>
 			<Rectangle id="Progress_6" translation="[490, 543]" scaleRotateCenter="[20, 5]" scale="[1, 1]" rotation="0" opacity="1" width="40" height="10" color="0xF1F1F1FF"/>
@@ -30,7 +30,7 @@ end sub
 					/>
 			</Animation>
 		</Group>
-		<Poster id="TNT_Logo_loader_full_png_7" translation="[523.5, 243.5]" scaleRotateCenter="[116.5, 116.5]" scale="[1, 1]" rotation="0" opacity="1" width="233" height="233" uri="http://107.170.5.4/images/TNT-Logo-loader-full.png"/>
+		<Poster id="TNT_Logo_loader_full_png_7" translation="[523.5, 243.5]" scaleRotateCenter="[116.5, 116.5]" scale="[1, 1]" rotation="0" opacity="1" width="233" height="233" uri="http://labmediaserver.crabdance.com/images/TNT-Logo-loader-full.png"/>
 	</Group>	
 </children>
 
