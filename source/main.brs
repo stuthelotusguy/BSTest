@@ -44,7 +44,8 @@ sub showChannelSGScreen()
     m.bufferSize = 0
 
     m.sendAddr = createobject("roSocketAddress")
-    m.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (New York)
+    'm.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (San Francisco)
+    m.sendAddr.SetAddress("internal-labmediaserver.crabdance.com:54322") ' Digital Ocean "internal-LabMediaServer" (New York)
     'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
     'm.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC on Lan
     'm.sendAddr.SetAddress("10.1.0.118:54322") ' MattC's PC on Stu's wifi router
