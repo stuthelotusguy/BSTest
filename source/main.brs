@@ -45,9 +45,9 @@ sub showChannelSGScreen()
 
     m.sendAddr = createobject("roSocketAddress")
     'm.sendAddr.SetAddress("labmediaserver.crabdance.com:54322") ' Digital Ocean "LabMediaServer" (San Francisco)
-    m.sendAddr.SetAddress("internal-labmediaserver.crabdance.com:54322") ' Digital Ocean "internal-LabMediaServer" (New York)
+    'm.sendAddr.SetAddress("internal-labmediaserver.crabdance.com:54322") ' Digital Ocean "internal-LabMediaServer" (New York)
     'm.sendAddr.SetAddress("37.139.6.121:54322") ' Digital Ocean "Amsterdam"
-    'm.sendAddr.SetAddress("192.168.3.148:54322") ' MattC's PC on Lan
+    m.sendAddr.SetAddress("192.168.2.85:54322") ' MattC's PC on Lan
     'm.sendAddr.SetAddress("10.1.0.118:54322") ' MattC's PC on Stu's wifi router
     'm.sendAddr.SetAddress("10.0.0.100:54322") ' Stu's PC
 
@@ -154,7 +154,7 @@ sub ProcessCommand(command as String)
         if left(name, 4) = "file"
             m.lib.uri=name
         else
-            m.lib.uri="https://labmediaserver.crabdance.com/images/" + name
+            m.lib.uri="https://internal-labmediaserver.crabdance.com/images/" + name
         end if
         print m.lib.loadStatus +" " + m.lib.uri
         while m.lib.loadStatus = "loading"
